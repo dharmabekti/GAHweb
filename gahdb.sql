@@ -21,13 +21,14 @@ USE `sigahdb`;
 DROP TABLE IF EXISTS `checkin_checkout`;
 
 CREATE TABLE `checkin_checkout` (
-  `ID_RESERVASI` int(11) NOT NULL,
+  `ID_RESERVASI` int(11) NOT NULL AUTO_INCREMENT,
   `TGL_CHECKIN` datetime DEFAULT NULL,
   `TGL_CHECKOUT` datetime DEFAULT NULL,
   `DEPOSIT` float DEFAULT NULL,
   `CASH` float DEFAULT NULL,
-  `ID_BOOKING` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `ID_BOOKING` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`ID_RESERVASI`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 /*Data for the table `checkin_checkout` */
 
@@ -38,7 +39,7 @@ insert  into `checkin_checkout`(`ID_RESERVASI`,`TGL_CHECKIN`,`TGL_CHECKOUT`,`DEP
 DROP TABLE IF EXISTS `data_diri`;
 
 CREATE TABLE `data_diri` (
-  `ID_DATA_DIRI` int(11) NOT NULL,
+  `ID_DATA_DIRI` int(11) NOT NULL AUTO_INCREMENT,
   `NAMA` varchar(30) DEFAULT NULL,
   `NAMA_INSTITUSI` varchar(30) DEFAULT NULL,
   `NO_IDENTITAS` varchar(15) DEFAULT NULL,
@@ -47,8 +48,9 @@ CREATE TABLE `data_diri` (
   `ALAMAT` varchar(50) DEFAULT NULL,
   `JENIS_KELAMIN` varchar(15) DEFAULT NULL,
   `TGL_BUAT` datetime DEFAULT NULL,
-  `ID_USER` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `ID_USER` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID_DATA_DIRI`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 /*Data for the table `data_diri` */
 
@@ -59,10 +61,11 @@ insert  into `data_diri`(`ID_DATA_DIRI`,`NAMA`,`NAMA_INSTITUSI`,`NO_IDENTITAS`,`
 DROP TABLE IF EXISTS `detil_kamar`;
 
 CREATE TABLE `detil_kamar` (
-  `ID_DETIL_KAMAR` int(11) NOT NULL,
+  `ID_DETIL_KAMAR` int(11) NOT NULL AUTO_INCREMENT,
   `NAMA_KAMAR` varchar(30) DEFAULT NULL,
-  `JUMLAH_KAMAR` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `JUMLAH_KAMAR` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID_DETIL_KAMAR`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Data for the table `detil_kamar` */
 
@@ -73,15 +76,16 @@ insert  into `detil_kamar`(`ID_DETIL_KAMAR`,`NAMA_KAMAR`,`JUMLAH_KAMAR`) values 
 DROP TABLE IF EXISTS `detil_reservasi`;
 
 CREATE TABLE `detil_reservasi` (
-  `ID_DETIL_RESERVASI` int(11) NOT NULL,
+  `ID_DETIL_RESERVASI` int(11) NOT NULL AUTO_INCREMENT,
   `JENIS_TAMU` varchar(10) NOT NULL,
   `JUMLAH_TAMU` int(11) DEFAULT NULL,
   `STATUS_BATAL` varchar(10) DEFAULT NULL,
   `JUMLAH_KAMAR` int(11) DEFAULT NULL,
   `JUMLAH_ANAK` int(11) DEFAULT NULL,
   `JUMLAH_DEWASA` int(11) DEFAULT NULL,
-  `ID_BOOKING` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `ID_BOOKING` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`ID_DETIL_RESERVASI`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 /*Data for the table `detil_reservasi` */
 
@@ -92,11 +96,12 @@ insert  into `detil_reservasi`(`ID_DETIL_RESERVASI`,`JENIS_TAMU`,`JUMLAH_TAMU`,`
 DROP TABLE IF EXISTS `detil_tarif`;
 
 CREATE TABLE `detil_tarif` (
-  `ID_DETIL_TARIF` int(11) NOT NULL,
+  `ID_DETIL_TARIF` int(11) NOT NULL AUTO_INCREMENT,
   `ID_ITEM` int(11) DEFAULT NULL,
   `ID_TARIF` int(11) DEFAULT NULL,
-  `JUMLAH_ITEM` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `JUMLAH_ITEM` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID_DETIL_TARIF`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 /*Data for the table `detil_tarif` */
 
@@ -107,11 +112,12 @@ insert  into `detil_tarif`(`ID_DETIL_TARIF`,`ID_ITEM`,`ID_TARIF`,`JUMLAH_ITEM`) 
 DROP TABLE IF EXISTS `detil_transaksi_pembayaran`;
 
 CREATE TABLE `detil_transaksi_pembayaran` (
-  `ID_DETIL_TRANSAKSI` int(11) NOT NULL,
+  `ID_DETIL_TRANSAKSI` int(11) NOT NULL AUTO_INCREMENT,
   `JENIS_PEMBAYARAN` varchar(10) DEFAULT NULL,
   `NOMOR_KARTU_KREDIT` varchar(20) DEFAULT NULL,
-  `NO_INVOICE` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `NO_INVOICE` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`ID_DETIL_TRANSAKSI`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 /*Data for the table `detil_transaksi_pembayaran` */
 
@@ -122,10 +128,11 @@ insert  into `detil_transaksi_pembayaran`(`ID_DETIL_TRANSAKSI`,`JENIS_PEMBAYARAN
 DROP TABLE IF EXISTS `item`;
 
 CREATE TABLE `item` (
-  `ID_ITEM` int(11) NOT NULL,
+  `ID_ITEM` int(11) NOT NULL AUTO_INCREMENT,
   `NAMA_ITEM` varchar(30) DEFAULT NULL,
-  `HARGA_ITEM` float DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `HARGA_ITEM` float DEFAULT NULL,
+  PRIMARY KEY (`ID_ITEM`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 /*Data for the table `item` */
 
@@ -153,9 +160,10 @@ insert  into `kamar`(`ID_KAMAR`,`TEMPAT_TIDUR`,`STAUS_SMOKING`,`STATUS_BOOKING`,
 DROP TABLE IF EXISTS `kota`;
 
 CREATE TABLE `kota` (
-  `ID_KOTA` int(11) NOT NULL,
-  `NAMA_KOTA` varchar(15) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `ID_KOTA` int(11) NOT NULL AUTO_INCREMENT,
+  `NAMA_KOTA` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`ID_KOTA`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `kota` */
 
@@ -183,9 +191,10 @@ insert  into `reservasi`(`ID_BOOKING`,`TGL_RESERVASI`,`ID_KAMAR`,`ID_DATA_DIRI`,
 DROP TABLE IF EXISTS `role`;
 
 CREATE TABLE `role` (
-  `ID_ROLE` int(11) NOT NULL,
-  `NAMA_ROLE` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `ID_ROLE` int(11) NOT NULL AUTO_INCREMENT,
+  `NAMA_ROLE` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`ID_ROLE`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Data for the table `role` */
 
@@ -196,9 +205,10 @@ insert  into `role`(`ID_ROLE`,`NAMA_ROLE`) values (1,'Admin'),(2,'Sales & Market
 DROP TABLE IF EXISTS `season`;
 
 CREATE TABLE `season` (
-  `ID_SEASON` int(11) NOT NULL,
-  `NAMA_SEASON` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `ID_SEASON` int(11) NOT NULL AUTO_INCREMENT,
+  `NAMA_SEASON` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`ID_SEASON`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `season` */
 
@@ -209,9 +219,10 @@ insert  into `season`(`ID_SEASON`,`NAMA_SEASON`) values (1,'Normal'),(2,'High Se
 DROP TABLE IF EXISTS `tarif`;
 
 CREATE TABLE `tarif` (
-  `ID_TARIF` int(11) NOT NULL,
-  `HARGA_TARIF` float DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `ID_TARIF` int(11) NOT NULL AUTO_INCREMENT,
+  `HARGA_TARIF` float DEFAULT NULL,
+  PRIMARY KEY (`ID_TARIF`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tarif` */
 
@@ -222,13 +233,14 @@ insert  into `tarif`(`ID_TARIF`,`HARGA_TARIF`) values (1,500000),(2,300000),(3,1
 DROP TABLE IF EXISTS `tarif_season`;
 
 CREATE TABLE `tarif_season` (
-  `ID_TARIF_SEASON` int(11) NOT NULL,
+  `ID_TARIF_SEASON` int(11) NOT NULL AUTO_INCREMENT,
   `TGL_MULAI` datetime DEFAULT NULL,
   `TGL_SELESAI` datetime DEFAULT NULL,
   `ID_SEASON` int(11) DEFAULT NULL,
   `ID_DETIL_KAMAR` int(11) DEFAULT NULL,
-  `HARGA_KAMAR` float DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `HARGA_KAMAR` float DEFAULT NULL,
+  PRIMARY KEY (`ID_TARIF_SEASON`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tarif_season` */
 
@@ -239,12 +251,13 @@ insert  into `tarif_season`(`ID_TARIF_SEASON`,`TGL_MULAI`,`TGL_SELESAI`,`ID_SEAS
 DROP TABLE IF EXISTS `tbl_user`;
 
 CREATE TABLE `tbl_user` (
-  `ID_USER` int(11) NOT NULL,
+  `ID_USER` int(11) NOT NULL AUTO_INCREMENT,
   `USERNAME` varchar(20) DEFAULT NULL,
   `PASSWORD` varchar(20) DEFAULT NULL,
   `ID_ROLE` int(11) DEFAULT NULL,
-  `ID_KOTA` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `ID_KOTA` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID_USER`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tbl_user` */
 

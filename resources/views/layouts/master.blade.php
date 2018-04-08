@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootsrtap Free Admin Template - SIMINTA | Admin Dashboad Template</title>
+    <title>Grand Atma Hotel</title>
     <!-- Core CSS - Include with every page -->
     <link href="{{ asset('template/admin/plugins/bootstrap/bootstrap.css') }}" rel="stylesheet" />
     <link href="{{ asset('template/admin/font-awesome/css/font-awesome.css') }}" rel="stylesheet" />
@@ -12,6 +12,7 @@
     <link href="{{ asset('template/admin/css/main-style.css') }}" rel="stylesheet" />
     <!-- Page-Level CSS -->
     <link href="{{ asset('template/admin/plugins/morris/morris-0.4.3.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('template/sweetalert/dist/sweetalert.css') }}">
 
     @yield('custom_css')
 
@@ -52,8 +53,8 @@
                 <!-- side-menu -->
                 <ul class="nav" id="side-menu">
                 	<li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard fa-fw"></i>Beranda</a></li>
-                    <li><a href=""><i class="fa fa-flask fa-fw"></i>Pengelolaan Kamar</a></li>
-                    <li><a href=""><i class="fa fa-table fa-fw"></i>Pengelolaan Session Kamar</a></li>
+                    <li><a href="{{ route('kamar.tampil') }}"><i class="fa fa-home fa-fw"></i> Kamar</a></li>
+                    <li><a href="{{ route('tarifseason.tampil') }}"><i class="fa fa-money fa-fw"></i> Tarif & Session Kamar</a></li>
                 </ul>
                 <!-- end side-menu -->
             </div>
@@ -92,6 +93,8 @@
     <script src="{{ asset('template/admin/plugins/morris/raphael-2.1.0.min.js') }}"></script>
     <script src="{{ asset('template/admin/plugins/morris/morris.js') }}"></script>
     <script src="{{ asset('template/admin/scripts/dashboard-demo.js') }}"></script>
+    <script src="{{ asset('template/sweetalert/sweetalert.js') }}"></script>
+    @include('sweet::alert')
     @yield('custom_script')
 </body>
 
