@@ -38,7 +38,8 @@
             <!-- navbar-top-links -->
             <ul class="nav navbar-top-links navbar-right">
                 <!-- main dropdown -->
-                <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i>Logout</a></li>
+                <li><a href="{{ route('dashboard') }}"><i class="fa fa-user fa-fw"></i>Selamat Datang, {{ Session::get('username') }} | </a></li>
+                <li><a href="{{ route('logout') }}"><i class="fa fa-sign-out fa-fw"></i>Logout</a></li>
                 <!-- end main dropdown -->
             </ul>
             <!-- end navbar-top-links -->

@@ -18,8 +18,9 @@
 
 Route::get('/login', 'LoginController@home')->name('login.home');
 Route::post('/login-auth', 'LoginController@doLogin')->name('login.auth');
+Route::get('/logout', 'LoginController@logout')->name('logout');
 //Route::get('/login', 'LoginController@login')->name('login.index');
-// Route::get('/logout', 'LoginController@Logout')->name('logout');
+
 
 Route::get('beranda', 'DashboardController@index')->name('dashboard'); // Dashboard
 //Pengelolaan Kamar
@@ -30,10 +31,8 @@ Route::get('/pengelolaan-kamar/cari','KamarController@pencarian')->name('kamar.c
 Route::get('tarif-season', 'TarifSeasonController@index')->name('tarifseason.tampil'); 
 Route::post('/tarif-season/simpan-tarif', 'TarifSeasonController@simpanTarif')->name('tarif.simpan');
 Route::get('/tarif-season/edit-tarif/{id}', 'TarifSeasonController@editTarif')->name('tarif.edit');
-Route::patch('/tarif-season/update-tarif/{id}', 'TarifSeasonController@updateTarif')->name('tarif.update');
 Route::delete('/tarif-season/hapus-tarif/{id}', 'TarifSeasonController@hapusTarif')->name('tarif.hapus');
 
 Route::post('/tarif-season/simpan-season', 'TarifSeasonController@simpanSeason')->name('season.simpan');
 Route::get('/tarif-season/edit-season/{id}', 'TarifSeasonController@editSeason')->name('season.edit');
-Route::patch('/tarif-season/update-season/{id}', 'TarifSeasonController@updateSeason')->name('season.update');
 Route::delete('/tarif-season/hapus/{id}', 'TarifSeasonController@hapusSeason')->name('season.hapus');
