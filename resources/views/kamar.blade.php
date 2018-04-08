@@ -54,7 +54,9 @@
                             <td>{{ $data->detilkamar['JUMLAH_KAMAR'] }}</td>
                             <td class="center">{{ $data->STAUS_SMOKING }}</td>
                             <td class="center">{{ $data->STATUS_BOOKING }}</td>
-                            <td></td>
+                            <td>
+                                <a href="#" class="btn btn-default btn-xs"><i class="fa fa-info-circle"></i> Detil</a>
+                            </td>
                         </tr>
                         </tbody>
                         @endforeach
