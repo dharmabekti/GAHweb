@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use App\DataDiri;
 use Alert;
 
 class DashboardController extends Controller
@@ -17,7 +18,17 @@ class DashboardController extends Controller
         }
         else
         {
-        	return view('beranda');
+            if(Session::get('role') == 1)
+            {
+                return view('beranda');
+            }
+            else if(Session::get('role') == 6)
+            {
+                $profil = DataDiri::where('ID_USER',Session::get('id_user'))->first();
+                if(empty($profil))
+                    $profil = null;
+                return view('customer.profil', compact('profil'));
+            }
         }
     	
     }

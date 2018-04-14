@@ -3,7 +3,7 @@
 @endsection
 
 @section('title')
-	PENGELOLAAN KAMAR
+	RESERVASI KAMAR
 @endsection
 
 @section('content')
@@ -17,10 +17,10 @@
             <div class="panel-body">
                 <div class="col-sm-4 col-xs-8 form-group">
                     <!-- <a href="" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</a> -->
-                    <a href="{{ route('kamar.tampil') }}" class="btn btn-success"><i class="fa fa-refresh"></i> Refresh</a>
+                    <a href="{{ route('reservasi.tampil') }}" class="btn btn-success"><i class="fa fa-refresh"></i> Refresh</a>
                     
                 </div>
-                {!! Form::open(['method'=>'GET','url'=>'/pengelolaan-kamar/cari'])  !!}
+                {!! Form::open(['method'=>'GET','url'=>'/reservasi/cari'])  !!}
                 <div class="col-sm-4 col-xs-8 form-group pull-right input-group">
                     <input type="text" name="katakunci" class="form-control" placeholder="Pencarian...">
                     <span class="input-group-btn">
@@ -30,39 +30,42 @@
                 {!! Form::close() !!}
 
                 <div class="table-responsive">
-                @if($kamar->count())
+                @if($reservasi->count())
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
                         <tr>
-                            <th>ID KAMAR</th>
+                            <th>ID BOOKING</th>
                             <th>NAMA KAMAR</th>
-                            <th>TEMPAT TIDUR</th>
-                            <th>JUMLAH</th>
-                            <th>SMOKING</th>
-                            <th>BOOKING</th>
-                            <th>HARGA</th>
+                            <th>PEMESAN</th>
+                            <th>KOTA</th>
+                            <th>TGL RESERVASI</th>
+                            <th>BATAL</th>
                             <th>KONTROL</th>
                         </tr>
                         </thead>
-                        @foreach($kamar as $data)
+                        @foreach($reservasi as $data)
                         <tbody>
                         <tr>
-                            <td class="center">{{ $data->ID_KAMAR }}</td>
-                            <td>{{ $data->detilkamar['NAMA_KAMAR'] }}</td>
-                            <td>{{ $data->TEMPAT_TIDUR }}</td>
-                            <td>{{ $data->detilkamar['JUMLAH_KAMAR'] }}</td>
-                            <td class="center">{{ $data->STAUS_SMOKING }}</td>
-                            <td class="center">{{ $data->STATUS_BOOKING }}</td>
-                            <td>Rp. {{number_format($data->tarifkamar['HARGA_KAMAR'], 2, ',', '.')}}</td>
+                            <td class="center">{{ $data->reservasi['ID_BOOKING'] }}</td>
+                            <td>{{ $data->reservasi->kamar->detilkamar['NAMA_KAMAR'] }} ({{ $data->reservasi['ID_KAMAR'] }})</td>
+                            <td>{{ $data->reservasi->datadiri['NAMA'] }} ({{ $data->reservasi->datadiri['NO_IDENTITAS'] }})</td>
+                            <td class="center">{{ $data->reservasi->kota['NAMA_KOTA'] }}</td>
+                            <td>{{ $data->reservasi['TGL_RESERVASI'] }}</td>
+                            <td>{{ $data->STATUS_BATAL }}</td>
                             <td>
-                                <a href="{{ route('kamar.detil',$data->ID_KAMAR) }}" class="btn btn-default btn-xs"><i class="fa fa-info-circle"></i> Detil</a>
+                                <form method="POST" action="{{ route('reservasi.batal', $data->ID_DETIL_RESERVASI) }}" accept-charset="UTF-8">
+                                  <input name="_method" type="hidden" value="DELETE">
+                                  <input name="_token" type="hidden" value="{{ csrf_token() }}">
+                                    <a href="{{ route('reservasi.detil', $data->ID_DETIL_RESERVASI) }}" class="btn btn-default btn-xs"><i class="fa fa-info-circle"></i> Detil</a>
+                                    <input type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Apakah Anda Ingin Membatalkan Reservasi?');" value="Batal">
+                                </form>
                             </td>
                         </tr>
                         </tbody>
                         @endforeach
                     </table>
                 </div>
-                {!! $kamar->links() !!}
+                {!! $reservasi->links() !!}
                 @else
                 <div class="alert">
                     <i class="fa fa-exclamation-triangle"></i> Data Tidak Tersedia...

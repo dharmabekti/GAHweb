@@ -7,13 +7,14 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Kamar;
+use App\TarifSeason;
 
 class KamarController extends Controller
 {
     public function index()
     {
     	$kamar = Kamar::orderBy('ID_DETIL_KAMAR')->paginate(10);
-    	return view('kamar', compact('kamar'));
+    	return view('kamar.index', compact('kamar'));
     }
 
     public function pencarian(Request $request)  // Mencari Kamar
@@ -31,6 +32,14 @@ class KamarController extends Controller
       		});
       })->paginate(10);
       $kamar->appends(['katakunci' => $katakunci]);
-      return view('kamar', compact('kamar'));
+      return view('kamar.index', compact('kamar'));
+    }
+
+    public function detilkamar($id)
+    {
+      // $kamar = $id;
+      $kamar = Kamar::Find($id);
+      // $kamar = Kamar::where('ID_KAMAR','LIKE',"$id%")->first();
+      return view('kamar.detil', compact('kamar'));
     }
 }

@@ -27,14 +27,11 @@ class LoginController extends Controller
       	{
           Session::put('username',$username);
           Session::put('password',$password);
+          Session::put('role',$user['ID_ROLE']);
+          Session::put('id_user',$user['ID_USER']);
           Session::put('login',TRUE);
-      		if($user['ID_ROLE'] == 1)
-          {
-            Alert::success('Selamat Datang, '. $username, 'LOGIN SUKSES')->persistent('Close');
-      			return redirect()->route('dashboard');
-          }
-      		else
-      			echo $user['ID_ROLE'];
+          Alert::success('Selamat Datang, '. $username, 'LOGIN SUKSES')->persistent('Close');
+          return redirect()->route('dashboard');
       	}
       	else
         {

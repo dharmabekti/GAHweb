@@ -30,7 +30,6 @@ class TarifSeasonController extends Controller
 	        $tarif = new Tarif();
 	        $tarif->HARGA_TARIF = $request->tarifbaru;
 	        $tarif->save();
-
 	        Alert::success('Tarif Baru Berhasil Disimpan' , 'SUKSES')->persistent('Close');
 	    }
 	    else

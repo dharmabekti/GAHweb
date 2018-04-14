@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2018 at 05:10 PM
+-- Generation Time: Apr 13, 2018 at 05:29 PM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.9
 
@@ -97,18 +97,19 @@ INSERT INTO `data_diri` (`ID_DATA_DIRI`, `NAMA`, `NAMA_INSTITUSI`, `NO_IDENTITAS
 CREATE TABLE `detil_kamar` (
   `ID_DETIL_KAMAR` int(11) NOT NULL,
   `NAMA_KAMAR` varchar(30) DEFAULT NULL,
-  `JUMLAH_KAMAR` int(11) DEFAULT NULL
+  `JUMLAH_KAMAR` int(11) DEFAULT NULL,
+  `FASILITAS` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `detil_kamar`
 --
 
-INSERT INTO `detil_kamar` (`ID_DETIL_KAMAR`, `NAMA_KAMAR`, `JUMLAH_KAMAR`) VALUES
-(1, 'Junior Suite', 10),
-(2, 'Executive Deluxe', 25),
-(3, 'Double Deluxe', 25),
-(4, 'Superior', 65);
+INSERT INTO `detil_kamar` (`ID_DETIL_KAMAR`, `NAMA_KAMAR`, `JUMLAH_KAMAR`, `FASILITAS`) VALUES
+(1, 'Junior Suite', 10, 'Layout - ruang duduk terpisah\r\nInternet - WiFi Gratis\r\nHiburan - Televisi LCD dengan channel TV premium channels\r\nMakan Minum - Pembuat kopi/teh, minibar, layanan kamar 24-jam, air minum kemasan gratis,termasuk sarapan\r\nUntuk tidur - Seprai kualitas premium dan gorden/tirai kedap cahaya\r\nKamar Mandi - Kamar mandi pribadi dengan bathtub dan shower terpisah, jubah mandi, dan sandal\r\nKemudahan - Brankas (muat laptop), Meja tulis, dan Telepon; tempat tidur lipat/tambahan tersedia berdasarkan permintaan\r\nKenyamanan - AC dan layanan pembenahan kamar harian Merokok/Dilarang Merokok'),
+(2, 'Executive Deluxe', 25, 'Internet - WiFi Gratis\r\nHiburan - Televisi LCD dengan channel TV premium channels\r\nMakan Minum - Pembuat kopi/teh, minibar, layanan kamar 24-jam, air minum kemasan gratis,termasuk sarapan\r\nUntuk tidur - Seprai kualitas premium dan gorden/tirai kedap cahaya\r\nKamar Mandi - Kamar mandi pribadi dengan shower, jubah mandi, dan sandal\r\nKemudahan - Brankas (muat laptop), Meja tulis, dan Telepon; tempat tidur lipat/tambahan tersedia berdasarkan permintaan\r\nKenyamanan - AC dan layanan pembenahan kamar harian Merokok/Dilarang Merokok'),
+(3, 'Double Deluxe', 25, 'Internet - WiFi Gratis\r\nHiburan - Televisi LCD dengan channel TV premium channels\r\nMakan Minum - Pembuat kopi/teh, minibar, layanan kamar 24-jam, air minum kemasan gratis,termasuk sarapan\r\nUntuk tidur - Seprai kualitas premium dan gorden/tirai kedap cahaya\r\nKamar Mandi - Kamar mandi pribadi dengan shower, jubah mandi, dan sandal\r\nKemudahan - Brankas (muat laptop), Meja tulis, dan Telepon; tempat tidur lipat/tambahan tersedia berdasarkan permintaan\r\nKenyamanan - AC dan layanan pembenahan kamar harian Merokok/Dilarang Merokok'),
+(4, 'Superior', 65, 'Internet - WiFi Gratis\r\nHiburan - Televisi LCD dengan channel TV premium channels\r\nMakan Minum - Pembuat kopi/teh, minibar, layanan kamar 24-jam, air minum kemasan gratis,termasuk sarapan\r\nUntuk tidur - Seprai kualitas premium dan gorden/tirai kedap cahaya\r\nKamar Mandi - Kamar mandi pribadi dengan shower, jubah mandi, dan sandal\r\nKemudahan - Brankas (muat laptop), Meja tulis, dan Telepon; tempat tidur lipat/tambahan tersedia berdasarkan permintaan\r\nKenyamanan - AC dan layanan pembenahan kamar harian Merokok/Dilarang Merokok');
 
 -- --------------------------------------------------------
 
@@ -239,31 +240,31 @@ CREATE TABLE `kamar` (
   `TEMPAT_TIDUR` varchar(10) DEFAULT NULL,
   `STAUS_SMOKING` varchar(5) DEFAULT 'Tidak',
   `STATUS_BOOKING` varchar(20) DEFAULT 'Tersedia',
-  `FASILITAS` varchar(100) DEFAULT NULL,
-  `ID_DETIL_KAMAR` int(11) DEFAULT NULL
+  `ID_DETIL_KAMAR` int(11) DEFAULT NULL,
+  `ID_TARIF_SEASON` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kamar`
 --
 
-INSERT INTO `kamar` (`ID_KAMAR`, `TEMPAT_TIDUR`, `STAUS_SMOKING`, `STATUS_BOOKING`, `FASILITAS`, `ID_DETIL_KAMAR`) VALUES
-('1001JS', 'King', 'TIDAK', 'TERSEDIA', 'Layout,Internet,Hiburan,Makan Minum,Untuk Tidur,Kamar Mandi,Kemudahan,Kenyamanan', 1),
-('1002JS', 'King', 'IYA', 'TERSEDIA', 'Layout,Internet,Hiburan,Makan Minum,Untuk Tidur,Kamar Mandi,Kemudahan,Kenyamanan', 1),
-('1003ED', 'King', 'TIDAK', 'TERSEDIA', 'Layout,Internet,Hiburan,Makan Minum,Untuk Tidur,Kamar Mandi,Kemudahan,Kenyamanan', 2),
-('1004ED', 'King', 'IYA', 'TERSEDIA', 'Layout,Internet,Hiburan,Makan Minum,Untuk Tidur,Kamar Mandi,Kemudahan,Kenyamanan', 2),
-('1005ED', 'King', 'TIDAK', 'TERSEDIA', 'Layout,Internet,Hiburan,Makan Minum,Untuk Tidur,Kamar Mandi,Kemudahan,Kenyamanan', 2),
-('1006ED', 'King', 'TIDAK', 'TERSEDIA', 'Layout,Internet,Hiburan,Makan Minum,Untuk Tidur,Kamar Mandi,Kemudahan,Kenyamanan', 2),
-('1007ED', 'King', 'IYA', 'TERSEDIA', 'Layout,Internet,Hiburan,Makan Minum,Untuk Tidur,Kamar Mandi,Kemudahan,Kenyamanan', 2),
-('1008DD', 'Double', 'TIDAK', 'TERSEDIA', 'Layout,Internet,Hiburan,Makan Minum,Untuk Tidur,Kamar Mandi,Kemudahan,Kenyamanan', 3),
-('1009DD', 'Double', 'IYA', 'TERSEDIA', 'Layout,Internet,Hiburan,Makan Minum,Untuk Tidur,Kamar Mandi,Kemudahan,Kenyamanan', 3),
-('1010DD', 'King', 'TIDAK', 'TERSEDIA', 'Layout,Internet,Hiburan,Makan Minum,Untuk Tidur,Kamar Mandi,Kemudahan,Kenyamanan', 3),
-('1011DD', 'King', 'IYA', 'TERSEDIA', 'Layout,Internet,Hiburan,Makan Minum,Untuk Tidur,Kamar Mandi,Kemudahan,Kenyamanan', 3),
-('1012DD', 'Double', 'TIDAK', 'TERSEDIA', 'Layout,Internet,Hiburan,Makan Minum,Untuk Tidur,Kamar Mandi,Kemudahan,Kenyamanan', 3),
-('1013S', 'Double', 'TIDAK', 'TERSEDIA', 'Layout,Internet,Hiburan,Makan Minum,Untuk Tidur,Kamar Mandi,Kemudahan,Kenyamanan', 4),
-('1014S', 'King', 'TIDAK', 'TERSEDIA', 'Layout,Internet,Hiburan,Makan Minum,Untuk Tidur,Kamar Mandi,Kemudahan,Kenyamanan', 4),
-('1015S', 'Double', 'IYA', 'TERSEDIA', 'Layout,Internet,Hiburan,Makan Minum,Untuk Tidur,Kamar Mandi,Kemudahan,Kenyamanan', 4),
-('1016S', 'King', 'IYA', 'TERSEDIA', 'Layout,Internet,Hiburan,Makan Minum,Untuk Tidur,Kamar Mandi,Kemudahan,Kenyamanan', 4);
+INSERT INTO `kamar` (`ID_KAMAR`, `TEMPAT_TIDUR`, `STAUS_SMOKING`, `STATUS_BOOKING`, `ID_DETIL_KAMAR`, `ID_TARIF_SEASON`) VALUES
+('1001JS', 'King', 'TIDAK', 'TERSEDIA', 1, 5),
+('1002JS', 'King', 'IYA', 'TERSEDIA', 1, 5),
+('1003ED', 'King', 'TIDAK', 'TERSEDIA', 2, 6),
+('1004ED', 'King', 'IYA', 'TERSEDIA', 2, 6),
+('1005ED', 'King', 'TIDAK', 'TERSEDIA', 2, 6),
+('1006ED', 'King', 'TIDAK', 'TERSEDIA', 2, 6),
+('1007ED', 'King', 'IYA', 'TERSEDIA', 2, 6),
+('1008DD', 'Double', 'TIDAK', 'TERSEDIA', 3, 7),
+('1009DD', 'Double', 'IYA', 'TERSEDIA', 3, 7),
+('1010DD', 'King', 'TIDAK', 'TERSEDIA', 3, 7),
+('1011DD', 'King', 'IYA', 'TERSEDIA', 3, 7),
+('1012DD', 'Double', 'TIDAK', 'TERSEDIA', 3, 7),
+('1013S', 'Double', 'TIDAK', 'TERSEDIA', 4, 8),
+('1014S', 'King', 'TIDAK', 'TERSEDIA', 4, 8),
+('1015S', 'Double', 'IYA', 'TERSEDIA', 4, 8),
+('1016S', 'King', 'IYA', 'TERSEDIA', 4, 8);
 
 -- --------------------------------------------------------
 
@@ -391,7 +392,6 @@ CREATE TABLE `tarif_season` (
   `TGL_MULAI` datetime DEFAULT NULL,
   `TGL_SELESAI` datetime DEFAULT NULL,
   `ID_SEASON` int(11) DEFAULT NULL,
-  `ID_DETIL_KAMAR` int(11) DEFAULT NULL,
   `HARGA_KAMAR` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -399,19 +399,19 @@ CREATE TABLE `tarif_season` (
 -- Dumping data for table `tarif_season`
 --
 
-INSERT INTO `tarif_season` (`ID_TARIF_SEASON`, `TGL_MULAI`, `TGL_SELESAI`, `ID_SEASON`, `ID_DETIL_KAMAR`, `HARGA_KAMAR`) VALUES
-(1, '2017-12-20 00:00:00', '2018-01-21 00:00:00', 1, 1, 550000),
-(2, '2017-12-20 00:00:00', '2018-01-21 00:00:00', 1, 2, 500000),
-(3, '2017-12-20 00:00:00', '2018-01-21 00:00:00', 1, 3, 450000),
-(4, '2017-12-20 00:00:00', '2018-01-21 00:00:00', 1, 4, 400000),
-(5, '2018-01-22 00:00:00', '2018-04-21 00:00:00', 2, 1, 700000),
-(6, '2018-01-22 00:00:00', '2018-04-21 00:00:00', 2, 2, 650000),
-(7, '2018-01-22 00:00:00', '2018-04-21 00:00:00', 2, 3, 600000),
-(8, '2018-01-22 00:00:00', '2018-04-21 00:00:00', 2, 4, 550000),
-(9, '2018-04-22 00:00:00', '2018-08-22 00:00:00', 3, 1, 450000),
-(10, '2018-04-22 00:00:00', '2018-08-22 00:00:00', 3, 2, 400000),
-(11, '2018-04-22 00:00:00', '2018-08-22 00:00:00', 3, 3, 350000),
-(12, '2018-04-22 00:00:00', '2018-08-22 00:00:00', 3, 4, 300000);
+INSERT INTO `tarif_season` (`ID_TARIF_SEASON`, `TGL_MULAI`, `TGL_SELESAI`, `ID_SEASON`, `HARGA_KAMAR`) VALUES
+(1, '2017-12-20 00:00:00', '2018-01-21 00:00:00', 1, 550000),
+(2, '2017-12-20 00:00:00', '2018-01-21 00:00:00', 1, 500000),
+(3, '2017-12-20 00:00:00', '2018-01-21 00:00:00', 1, 450000),
+(4, '2017-12-20 00:00:00', '2018-01-21 00:00:00', 1, 400000),
+(5, '2018-01-22 00:00:00', '2018-04-21 00:00:00', 2, 700000),
+(6, '2018-01-22 00:00:00', '2018-04-21 00:00:00', 2, 650000),
+(7, '2018-01-22 00:00:00', '2018-04-21 00:00:00', 2, 600000),
+(8, '2018-01-22 00:00:00', '2018-04-21 00:00:00', 2, 550000),
+(9, '2018-04-22 00:00:00', '2018-08-22 00:00:00', 3, 450000),
+(10, '2018-04-22 00:00:00', '2018-08-22 00:00:00', 3, 400000),
+(11, '2018-04-22 00:00:00', '2018-08-22 00:00:00', 3, 350000),
+(12, '2018-04-22 00:00:00', '2018-08-22 00:00:00', 3, 300000);
 
 -- --------------------------------------------------------
 
@@ -442,7 +442,7 @@ INSERT INTO `tbl_user` (`ID_USER`, `USERNAME`, `PASSWORD`, `ID_ROLE`, `ID_KOTA`)
 (8, 'Johan', '8558', 6, 2),
 (9, 'Bella', '8888', 6, 1),
 (10, 'Viktor', '7118', 6, 2),
-(33, 'gghj', '080897', 6, NULL);
+(11, 'awan', '42x1rn', 6, 2);
 
 -- --------------------------------------------------------
 
@@ -532,7 +532,8 @@ ALTER TABLE `item`
 --
 ALTER TABLE `kamar`
   ADD PRIMARY KEY (`ID_KAMAR`),
-  ADD KEY `id_detil_kamar_fk` (`ID_DETIL_KAMAR`);
+  ADD KEY `id_detil_kamar_fk` (`ID_DETIL_KAMAR`),
+  ADD KEY `id_tarif_season_fk` (`ID_TARIF_SEASON`);
 
 --
 -- Indexes for table `kota`
@@ -572,15 +573,13 @@ ALTER TABLE `tarif`
 --
 ALTER TABLE `tarif_season`
   ADD PRIMARY KEY (`ID_TARIF_SEASON`),
-  ADD KEY `id_season_fk` (`ID_SEASON`),
-  ADD KEY `id_detil_kamar2_fk` (`ID_DETIL_KAMAR`);
+  ADD KEY `id_season_fk` (`ID_SEASON`);
 
 --
 -- Indexes for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
   ADD PRIMARY KEY (`ID_USER`),
-  ADD UNIQUE KEY `USERNAME` (`USERNAME`),
   ADD KEY `id_kota_fk` (`ID_KOTA`),
   ADD KEY `id_role_fk` (`ID_ROLE`);
 
@@ -671,7 +670,7 @@ ALTER TABLE `tarif_season`
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `ID_USER` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `ID_USER` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
@@ -712,7 +711,8 @@ ALTER TABLE `detil_transaksi_pembayaran`
 -- Constraints for table `kamar`
 --
 ALTER TABLE `kamar`
-  ADD CONSTRAINT `id_detil_kamar_fk` FOREIGN KEY (`ID_DETIL_KAMAR`) REFERENCES `detil_kamar` (`ID_DETIL_KAMAR`);
+  ADD CONSTRAINT `id_detil_kamar_fk` FOREIGN KEY (`ID_DETIL_KAMAR`) REFERENCES `detil_kamar` (`ID_DETIL_KAMAR`),
+  ADD CONSTRAINT `id_tarif_season_fk` FOREIGN KEY (`ID_TARIF_SEASON`) REFERENCES `tarif_season` (`ID_TARIF_SEASON`);
 
 --
 -- Constraints for table `reservasi`
@@ -726,7 +726,6 @@ ALTER TABLE `reservasi`
 -- Constraints for table `tarif_season`
 --
 ALTER TABLE `tarif_season`
-  ADD CONSTRAINT `id_detil_kamar2_fk` FOREIGN KEY (`ID_DETIL_KAMAR`) REFERENCES `detil_kamar` (`ID_DETIL_KAMAR`),
   ADD CONSTRAINT `id_season_fk` FOREIGN KEY (`ID_SEASON`) REFERENCES `season` (`ID_SEASON`);
 
 --

@@ -26,6 +26,7 @@ Route::get('beranda', 'DashboardController@index')->name('dashboard'); // Dashbo
 //Pengelolaan Kamar
 Route::get('pengelolaan-kamar', 'KamarController@index')->name('kamar.tampil');
 Route::get('/pengelolaan-kamar/cari','KamarController@pencarian')->name('kamar.cari');
+Route::get('/pengelolaan-kamar/detil/{id}','KamarController@detilkamar')->name('kamar.detil');
 
 //Pengelolaan Tarif & Seasion Kamar
 Route::get('tarif-season', 'TarifSeasonController@index')->name('tarifseason.tampil'); 
@@ -36,3 +37,23 @@ Route::delete('/tarif-season/hapus-tarif/{id}', 'TarifSeasonController@hapusTari
 Route::post('/tarif-season/simpan-season', 'TarifSeasonController@simpanSeason')->name('season.simpan');
 Route::get('/tarif-season/edit-season/{id}', 'TarifSeasonController@editSeason')->name('season.edit');
 Route::delete('/tarif-season/hapus/{id}', 'TarifSeasonController@hapusSeason')->name('season.hapus');
+
+//Pengelolaan Reservasi
+Route::get('reservasi', 'ReservasiController@index')->name('reservasi.tampil');
+Route::get('/reservasi/cari','ReservasiController@pencarian')->name('reservasi.cari');
+Route::get('/reservasi/detil/{id}','ReservasiController@detilreservasi')->name('reservasi.detil');
+Route::delete('/reservasi/batal/{id}','ReservasiController@batalreservasi')->name('reservasi.batal');
+
+//Pengelolaan Akun
+Route::get('pegawai', 'AkunController@index')->name('pegawai.tampil');
+Route::post('/pegawai/simpan', 'AkunController@simpan')->name('pegawai.simpan');
+Route::get('/pegawai/cari','AkunController@pencarian')->name('pegawai.cari');
+Route::get('/pegawai/ubah/{id}','AkunController@ubah')->name('pegawai.ubah');
+Route::delete('/pegawai/hapus/{id}','AkunController@hapus')->name('pegawai.hapus');
+Route::get('/pegawai/reset-password/{id}', 'AkunController@resetpassword')->name('pegawai.resetpassword');
+
+// Pengelolaan Customer
+// Route::get('customer/profil', 'CustomerController@indexCustomer')->name('customer.profil');
+Route::get('/customer/ubah/{id}','CustomerController@ubah')->name('customer.ubah');
+Route::patch('/customer/ubah/{id}','CustomerController@simpanPerubahan')->name('customer.simpanperubahan');
+Route::patch('/customer/ganti-password/{id}','CustomerController@gantiPassword')->name('customer.gantipassword');
