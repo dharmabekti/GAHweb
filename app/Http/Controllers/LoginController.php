@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use Alert;
 use App\User;
 use DB;
+use Validator;
 
 
 class LoginController extends Controller
@@ -46,5 +47,68 @@ class LoginController extends Controller
         Session::flush();
         Alert::success('Anda Telah Logout' , 'SUKSES')->persistent('Close');
         return redirect()->route('login.home');
+    }
+
+    public function register()
+    {
+      return view('registerCustomer');
+    }
+
+    public function daftar(Request $request)
+    {
+      $cekUser = User::where('USERNAME',$request->username)->get();
+      if(empty($cekUser))
+      {
+        if($request->password == $request->konfirmasi)
+        {
+          $user = new User();
+          $user->USERNAME = $request->username;
+          $user->PASSWORD = $request->password;
+          $user->ID_ROLE = 6;
+          $user->save();
+
+          Alert::success('Silakan Login' , 'SUKSES')->persistent('Close');
+          return redirect()->route('login.home');
+        }
+        else
+        {
+          Alert::error('Konfirmasi Password Tidak Sesuai', 'ERROR')->persistent('Close');
+          return redirect()->route('login.register');
+        }
+      }
+      else
+      {
+        Alert::error('Username Sudah Digunakan', 'ERROR')->persistent('Close');
+        return redirect()->route('login.register');
+      }
+    }
+
+
+    public function lupapassword()
+    {
+      return view('lupaPassword');
+    }
+
+    public function reset(Request $request)
+    {
+        $characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        $string = '';
+        $max = strlen($characters) - 1;
+        for ($i = 0; $i < 6; $i++) {
+          $string .= $characters[mt_rand(0, $max)];
+        }
+        $user = User::where('USERNAME',$request->username)->first();
+        if(!empty($user))
+        {
+          $user->PASSWORD = $string;
+          $user->save();
+          Alert::success('Password Baru Anda : ' . $string, 'SUKSES')->persistent('Close');
+          return redirect()->route('login.home');
+        }
+        else
+        {
+          Alert::error('Username Tidak Ditemukan...', 'PERINGATAN')->persistent('Close');
+          return redirect()->route('login.lupapassword');
+        }
     }
 }

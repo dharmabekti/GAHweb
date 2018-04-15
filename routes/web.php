@@ -19,7 +19,10 @@
 Route::get('/login', 'LoginController@home')->name('login.home');
 Route::post('/login-auth', 'LoginController@doLogin')->name('login.auth');
 Route::get('/logout', 'LoginController@logout')->name('logout');
-//Route::get('/login', 'LoginController@login')->name('login.index');
+Route::get('/register-customer', 'LoginController@register')->name('login.register');
+Route::post('/daftar-customer', 'LoginController@daftar')->name('login.daftar');
+Route::get('/login/lupa-password','LoginController@lupapassword')->name('login.lupapassword');
+Route::post('/login/reset-password','LoginController@reset')->name('login.reset');
 
 
 Route::get('beranda', 'DashboardController@index')->name('dashboard'); // Dashboard
@@ -53,7 +56,7 @@ Route::delete('/pegawai/hapus/{id}','AkunController@hapus')->name('pegawai.hapus
 Route::get('/pegawai/reset-password/{id}', 'AkunController@resetpassword')->name('pegawai.resetpassword');
 
 // Pengelolaan Customer
-// Route::get('customer/profil', 'CustomerController@indexCustomer')->name('customer.profil');
+Route::post('customer/simpan', 'CustomerController@simpan')->name('customer.simpan');
 Route::get('/customer/ubah/{id}','CustomerController@ubah')->name('customer.ubah');
 Route::patch('/customer/ubah/{id}','CustomerController@simpanPerubahan')->name('customer.simpanperubahan');
 Route::patch('/customer/ganti-password/{id}','CustomerController@gantiPassword')->name('customer.gantipassword');

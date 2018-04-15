@@ -26,8 +26,9 @@ class DashboardController extends Controller
             {
                 $profil = DataDiri::where('ID_USER',Session::get('id_user'))->first();
                 if(empty($profil))
-                    $profil = null;
-                return view('customer.profil', compact('profil'));
+                    return view('customer.create');
+                else
+                    return view('customer.profil', compact('profil'));
             }
         }
     	

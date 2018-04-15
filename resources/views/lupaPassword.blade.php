@@ -2,7 +2,7 @@
 <html >
 <head>
   <meta charset="UTF-8">
-  <title>Login Grand Atma Hotel</title>
+  <title>Reset Password</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
   <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900'>
   <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Montserrat:400,700'>
@@ -14,17 +14,14 @@
 <body>
 <div class="container">
   <div class="info">
-    <h1>Grand Atma Hotel</h1>
+    <h1>Reset Password</h1>
   </div>
 </div>
 <div class="form">
-  <div class="thumbnail"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/hat.svg"/></div>
-  <form action = "{{ route('login.auth') }}" method="post" class="login-form">
+  <form action = "{{ route('login.reset') }}" method="post" class="login-form">
   {{ csrf_field() }}
-    <input type="text" placeholder="Username" name="username" />
-    <input type="password" placeholder="Password" name="password" />
-    <button>login</button>
-    <p class="message"><a href="{{ route('login.lupapassword') }}">Lupa Password?</a> | <a href="{{ route('login.register') }}">Buat Akun</a></p>
+    <input type="text" placeholder="Masukkan Username" name="username" required />
+    <button onclick="return confirm('Apakah Anda Ingin Reset Password?');">Reset Password</button>
   </form>
 </div>
 <video id="video" autoplay="autoplay" loop="loop" poster="polina.jpg">
