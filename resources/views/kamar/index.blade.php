@@ -24,7 +24,7 @@
                 <div class="col-sm-4 col-xs-8 form-group pull-right input-group">
                     <input type="text" name="katakunci" class="form-control" placeholder="Pencarian...">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+                        <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
                     </span>
                 </div>
                 {!! Form::close() !!}

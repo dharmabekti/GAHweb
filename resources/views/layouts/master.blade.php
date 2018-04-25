@@ -57,6 +57,7 @@
                     <li><a href="{{ route('kamar.tampil') }}"><i class="fa fa-home fa-fw"></i> Kamar</a></li>
                     <li><a href="{{ route('reservasi.tampil') }}"><i class="fa fa-home fa-fw"></i> Reservasi</a></li>
                     <li><a href="{{ route('tarifseason.tampil') }}"><i class="fa fa-money fa-fw"></i> Tarif & Session Kamar</a></li>
+                    <li><a href="{{ route('tamu.tampil') }}"><i class="fa fa-user fa-fw"></i> Daftar Tamu</a></li>
                     <li><a href="{{ route('pegawai.tampil') }}"><i class="fa fa-user fa-fw"></i> Akun Pegwawai</a></li>
                 </ul>
                 <!-- end side-menu -->

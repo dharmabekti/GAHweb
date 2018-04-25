@@ -60,3 +60,13 @@ Route::post('customer/simpan', 'CustomerController@simpan')->name('customer.simp
 Route::get('/customer/ubah/{id}','CustomerController@ubah')->name('customer.ubah');
 Route::patch('/customer/ubah/{id}','CustomerController@simpanPerubahan')->name('customer.simpanperubahan');
 Route::patch('/customer/ganti-password/{id}','CustomerController@gantiPassword')->name('customer.gantipassword');
+
+
+//Daftar Tamu
+Route::get('tamu', 'TamuController@index')->name('tamu.tampil');
+Route::get('/tamu/cari','TamuController@pencarian')->name('tamu.cari');
+Route::get('tamu/baru', 'TamuController@tambah')->name('tamu.baru');
+Route::post('tamu/simpan', 'TamuController@simpan')->name('tamu.simpan');
+Route::get('tamu/ubah/{id}', 'TamuController@ubah')->name('tamu.ubah');
+Route::patch('tamu/simpanperubahan/{id}', 'TamuController@simpanperubahan')->name('tamu.simpanperubahan');
+Route::get('tamu/detil/{id}', 'TamuController@detil')->name('tamu.detil');

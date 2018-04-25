@@ -26,7 +26,7 @@
                 <div class="col-sm-4 col-xs-8 form-group pull-right input-group">
                     <input type="text" name="katakunci" class="form-control" placeholder="Pencarian...">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+                        <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
                     </span>
                 </div>
                 {!! Form::close() !!}
@@ -77,7 +77,7 @@
             {{csrf_field()}}
                 <td><input type="text"class="form-control" name="username" placeholder="Masukkan Username Baru" 
                     value="<?php if($dataUser!=null) echo $dataUser->USERNAME; else ""; ?>" required>
-                    <input type="text" name="idUser" value="<?php if($dataUser!=null) echo $dataUser->ID_USER; else ""; ?>"></td>
+                    <input type="hidden" name="idUser" value="<?php if($dataUser!=null) echo $dataUser->ID_USER; else ""; ?>"></td>
                 <td>
                     <select class="form-control" name="role">
                         @foreach ($role as $data)
