@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 13, 2018 at 05:29 PM
+-- Generation Time: Apr 26, 2018 at 08:28 AM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.9
 
@@ -81,12 +81,15 @@ INSERT INTO `data_diri` (`ID_DATA_DIRI`, `NAMA`, `NAMA_INSTITUSI`, `NO_IDENTITAS
 (2, 'Dwi Cahya Sadewa', NULL, '123456789', '123344', 'dwi@gmail.com', 'yeah', 'Laki-laki', '1996-02-28 00:00:00', 6),
 (3, 'Lala', 'ITB', '12121212', '08080808', 'lala@gmail.com', 'Kuku', 'Perempuan', '2012-01-02 00:00:00', NULL),
 (4, 'Johan S.', NULL, '13579013', '123123123', 'johan@gmail.com', 'solo', 'Laki-laki', '2018-01-01 00:00:00', 8),
-(5, 'Bella P.', NULL, '1234567', '453223563', 'bella@gmail.com', 'cilacap', 'Perempuan', '2018-10-30 00:00:00', 9),
+(5, 'Bella Priscilia', NULL, '1612345', '081239000123', 'bella@gmail.com', 'Mrican', 'Perempuan', '2018-10-30 00:00:00', 9),
 (6, 'Desi', 'UAJY', '12345671', '123451234', 'desi@gmail.com', 'Lokasi', 'Perempuan', '2016-03-03 00:00:00', NULL),
 (7, 'Joko', ' ogle', '4689213', '123457411', 'joko@gmail.com', 'Jakarta', 'Laki-laki', '2016-08-08 00:00:00', NULL),
 (8, 'Kuncoro', 'Blibli', '34578321', '123567334', 'kunc@gmail.com', 'Kutilang', 'Laki-laki', '2017-07-07 00:00:00', NULL),
 (9, 'Herri', 'Blibli', '32546621', '112345554', 'Henri@gmail.com', 'babarsari', 'Laki-laki', '2017-12-24 00:00:00', NULL),
-(10, 'Lola', 'Tokopedia', '11111111', '234311233', 'lola@gmail.com', 'babarsari', 'Perempuan', '2017-05-25 00:00:00', NULL);
+(10, 'Lola', 'Tokopedia', '11111111', '234311233', 'lola@gmail.com', 'babarsari', 'Perempuan', '2017-05-25 00:00:00', NULL),
+(11, 'Awan', NULL, '150708605', '081999999999', 'awan@gmail.com', 'Babarsari', 'Laki-laki', '2018-04-14 15:31:45', 11),
+(17, 'Lucky Putra', NULL, '777', '08123944213', 'lucky@gmail.com', 'badak agung', 'Laki - Laki', '2018-04-18 18:02:44', 14),
+(18, 'Happy Florentina Melani Utami ', NULL, '150708888', '081234567000', 'happy@gmail.com', 'Banjarmasin', 'Perempuan', '2018-04-21 23:26:45', 15);
 
 -- --------------------------------------------------------
 
@@ -297,25 +300,26 @@ CREATE TABLE `reservasi` (
   `ID_KAMAR` varchar(10) DEFAULT NULL,
   `ID_DATA_DIRI` int(11) DEFAULT NULL,
   `ID_KOTA` int(11) DEFAULT NULL,
-  `ID_TARIF` int(11) DEFAULT NULL
+  `ID_TARIF` int(11) DEFAULT NULL,
+  `TGL_MENGINAP` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `reservasi`
 --
 
-INSERT INTO `reservasi` (`ID_BOOKING`, `TGL_RESERVASI`, `ID_KAMAR`, `ID_DATA_DIRI`, `ID_KOTA`, `ID_TARIF`) VALUES
-('G040416-006', '2016-04-04 00:00:00', '1005ED', 6, 2, 1),
-('G070716-008', '2016-07-07 00:00:00', '1007ED', 8, 2, NULL),
-('G080816-007', '2016-08-08 00:00:00', '1006ED', 7, 1, NULL),
-('G080818-011', '2018-08-08 00:00:00', '1016S', 6, 2, 4),
-('G121212-003', '2012-12-12 00:00:00', '1002JS', 3, 1, NULL),
-('G241217-009', '2017-12-24 00:00:00', '1008DD', 9, 2, NULL),
-('G250517-010', '2017-05-24 00:00:00', '1009DD', 10, 2, NULL),
-('P020218-004', '2018-02-02 00:00:00', '1003ED', 4, 1, 2),
-('P080818-002', '2018-08-08 00:00:00', '1008DD', 2, 1, NULL),
-('P231218-001', '2018-12-23 00:00:00', '1001JS', 1, 1, 3),
-('P301018-005', '2018-10-30 00:00:00', '1004ED', 5, 2, NULL);
+INSERT INTO `reservasi` (`ID_BOOKING`, `TGL_RESERVASI`, `ID_KAMAR`, `ID_DATA_DIRI`, `ID_KOTA`, `ID_TARIF`, `TGL_MENGINAP`) VALUES
+('G040416-006', '2016-04-04 00:00:00', '1005ED', 6, 2, 1, '2016-04-20 00:00:00'),
+('G070716-008', '2016-07-07 00:00:00', '1007ED', 8, 2, NULL, '2016-07-16 00:00:00'),
+('G080816-007', '2016-08-08 00:00:00', '1006ED', 7, 1, NULL, '2016-08-16 00:00:00'),
+('G080818-011', '2018-08-08 00:00:00', '1016S', 6, 2, 4, '2012-12-10 00:00:00'),
+('G121212-003', '2012-12-12 00:00:00', '1002JS', 3, 1, NULL, '2012-12-24 00:00:00'),
+('G241217-009', '2017-12-24 00:00:00', '1008DD', 9, 2, NULL, '2017-12-31 00:00:00'),
+('G250517-010', '2017-05-24 00:00:00', '1009DD', 10, 2, NULL, '2017-06-01 00:00:00'),
+('P020218-004', '2018-02-02 00:00:00', '1003ED', 4, 1, 2, '2018-02-09 00:00:00'),
+('P080818-002', '2018-08-08 00:00:00', '1008DD', 2, 1, NULL, '2018-08-20 00:00:00'),
+('P231218-001', '2018-12-23 00:00:00', '1001JS', 1, 1, 3, '2018-12-30 00:00:00'),
+('P301018-005', '2018-10-30 00:00:00', '1004ED', 5, 2, NULL, '2018-11-08 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -442,7 +446,9 @@ INSERT INTO `tbl_user` (`ID_USER`, `USERNAME`, `PASSWORD`, `ID_ROLE`, `ID_KOTA`)
 (8, 'Johan', '8558', 6, 2),
 (9, 'Bella', '8888', 6, 1),
 (10, 'Viktor', '7118', 6, 2),
-(11, 'awan', '42x1rn', 6, 2);
+(11, 'awan', '42x1rn', 6, 2),
+(14, 'lucky', '2408', 6, 2),
+(15, 'Happy', '212121', 6, 1);
 
 -- --------------------------------------------------------
 
@@ -604,7 +610,7 @@ ALTER TABLE `checkin_checkout`
 -- AUTO_INCREMENT for table `data_diri`
 --
 ALTER TABLE `data_diri`
-  MODIFY `ID_DATA_DIRI` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ID_DATA_DIRI` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `detil_kamar`
@@ -670,7 +676,7 @@ ALTER TABLE `tarif_season`
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `ID_USER` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ID_USER` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables

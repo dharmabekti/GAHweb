@@ -30,6 +30,14 @@ Route::get('beranda', 'DashboardController@index')->name('dashboard'); // Dashbo
 Route::get('pengelolaan-kamar', 'KamarController@index')->name('kamar.tampil');
 Route::get('/pengelolaan-kamar/cari','KamarController@pencarian')->name('kamar.cari');
 Route::get('/pengelolaan-kamar/detil/{id}','KamarController@detilkamar')->name('kamar.detil');
+Route::get('tipe-kamar', 'KamarController@tampiltipekamar')->name('tipekamar.tampil');
+Route::get('tipe-kamar/tambah', 'KamarController@tambahtipekamar')->name('tipekamar.tambah');
+Route::post('tipe-kamar/simpan', 'KamarController@simpantipekamar')->name('tipekamar.simpan');
+Route::get('/tipe-kamar/ubah/{id}','KamarController@ubahTipeKamar')->name('tipekamar.ubah');
+Route::patch('tipe-kamar/simpanperubahan/{id}', 'KamarController@simpanPerubahanTipeKamar')->name('tipekamar.simpanperubahan');
+Route::delete('/tipe-kamar/hapus/{id}','KamarController@hapusTipeKamar')->name('tipekamar.hapus');
+Route::get('/tipe-kamar/cari','KamarController@pencarianTipeKamar')->name('tipekamar.cari');
+
 
 //Pengelolaan Tarif & Seasion Kamar
 Route::get('tarif-season', 'TarifSeasonController@index')->name('tarifseason.tampil'); 
