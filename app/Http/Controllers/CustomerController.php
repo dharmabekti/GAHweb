@@ -7,9 +7,12 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
+use Alert;
 use App\DataDiri;
 use App\User;
-use Alert;
+use App\Reservasi;
+use App\DetilReservasi;
+define('page', 10);
 
 class CustomerController extends Controller
 {
@@ -80,4 +83,47 @@ class CustomerController extends Controller
         Alert::success('Data Diri Berhasil Disimpan', 'SUKSES')->persistent('Close');
         return redirect()->route('dashboard');
     }
+
+
+    // DATA RESERVASI
+    public function datareservasi()
+    {
+        $user = DataDiri::where('ID_USER',Session::get('id_user'))->first();
+        $reservasi = DetilReservasi::orderBy(\DB::raw('substr(ID_BOOKING, 8)'),'DESC')->where('STATUS_BATAL','TIDAK')
+        ->WhereHas('reservasi', function($q) use ($user){
+            $q->where('reservasi.ID_DATA_DIRI',$user->ID_DATA_DIRI);
+        })->paginate(page);
+        return view('customer.datareservasi', compact('reservasi'));
+    }
+
+    public function detilreservasi($id)
+    {
+        $reservasi = DetilReservasi::FindOrFail($id);
+        return view('customer.detilreservasi', compact('reservasi'));
+    }
+
+    public function batalreservasi($id)
+    {
+        $reservasi = DetilReservasi::FindOrFail($id);
+        if($reservasi->STATUS_BATAL == 'YA'){
+            Alert::error('Reservasi Sudah Dibatalkan', 'PERINGATAN')->persistent('Close');
+        }
+        else{
+            $reservasi->STATUS_BATAL = 'YA';
+            $reservasi->save();
+            Alert::success('Reservasi Dibatalkan', 'SUKSES')->persistent('Close');
+        }
+        return redirect()->route('customer.datareservasi', compact('reservasi'));
+    }
+
+    public function historireservasi()
+    {
+        $user = DataDiri::where('ID_USER',Session::get('id_user'))->first();
+        $reservasi = DetilReservasi::orderBy(\DB::raw('substr(ID_BOOKING, 8)'),'DESC')->where('STATUS_BATAL','YA')
+        ->WhereHas('reservasi', function($q) use ($user){
+            $q->where('reservasi.ID_DATA_DIRI',$user->ID_DATA_DIRI);
+        })->paginate(page);
+        return view('customer.historireservasi', compact('reservasi'));
+    }
+    
 }

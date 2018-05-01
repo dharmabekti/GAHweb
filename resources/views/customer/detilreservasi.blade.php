@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.masterCustomer')
 @section('custom_css')
 @endsection
 
@@ -16,7 +16,7 @@
             </div>
             <div class="panel-body">
                 <div class="col-sm-4 col-xs-8 form-group">
-                    <a href="{{ route('reservasi.tampil') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
+                    <a href="{{ route('customer.datareservasi') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
                 </div>
                 <div class="col-sm-12">
                 <table class="table table-striped table-bordered" id="dataTables-example">

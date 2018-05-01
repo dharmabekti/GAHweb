@@ -54,6 +54,7 @@
                 <!-- side-menu -->
                 <ul class="nav" id="side-menu">
                 	<li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard fa-fw"></i>Profil</a></li>
+                    <li><a href="{{ route('customer.datareservasi') }}"><i class="fa fa-home fa-fw"></i>Data Reservasi</a></li>
                 </ul>
                 <!-- end side-menu -->
             </div>
