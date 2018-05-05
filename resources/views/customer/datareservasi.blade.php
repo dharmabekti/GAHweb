@@ -16,6 +16,7 @@
             </div>
             <div class="panel-body">
                 <div class="col-sm-4 col-xs-8 form-group">
+                    <a href="{{ route('customer.tambahreservasi') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</a>
                     <a href="{{ route('customer.historireservasi') }}" class="btn btn-warning"><i class="fa fa-folder"></i> Riwayat</a>
                 </div>
 
@@ -44,23 +45,13 @@
                                 <form method="POST" action="{{ route('customer.batalreservasi', $data->ID_DETIL_RESERVASI) }}" accept-charset="UTF-8">
                                   <input name="_method" type="hidden" value="DELETE">
                                   <input name="_token" type="hidden" value="{{ csrf_token() }}">
-                                    
+                                    <a href="{{ route('customer.detilreservasi', $data->ID_DETIL_RESERVASI) }}" class="btn btn-default btn-xs"><i class="fa fa-info-circle"></i> Detil</a>
                                     <input type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Apakah Anda Ingin Membatalkan Reservasi?');" value="Batal">
                                 </form>
                             </td>
                         </tr>
                         </tbody>
                         @endforeach
-                        <thead>
-                        <tr>
-                            <th>ID BOOKING</th>
-                            <th>NAMA KAMAR</th>
-                            <th>PEMESAN</th>
-                            <th>KOTA</th>
-                            <th>TGL RESERVASI</th>
-                            <th>KONTROL</th>
-                        </tr>
-                        </thead>
                     </table>
                 </div>
                 {!! $reservasi->links() !!}

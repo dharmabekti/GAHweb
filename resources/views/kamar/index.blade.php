@@ -16,7 +16,9 @@
             </div>
             <div class="panel-body">
                 <div class="col-sm-4 col-xs-8 form-group">
-                    <!-- <a href="" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</a> -->
+                @if(Session::get('role') == 1)
+                    <a href="{{ route('kamar.tambah') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</a>
+                @endif
                     <a href="{{ route('kamar.tampil') }}" class="btn btn-success"><i class="fa fa-refresh"></i> Refresh</a>
                     
                 </div>
@@ -56,6 +58,9 @@
                             <td>Rp. {{number_format($data->tarifkamar['HARGA_KAMAR'], 2, ',', '.')}}</td>
                             <td>
                                 <a href="{{ route('kamar.detil',$data->ID_KAMAR) }}" class="btn btn-default btn-xs"><i class="fa fa-info-circle"></i> Detil</a>
+                                @if(Session::get('role') == 1)
+                                    <a href="{{ route('kamar.ubah',$data->ID_KAMAR) }}" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i> Ubah</a>
+                                @endif
                             </td>
                         </tr>
                         </tbody>

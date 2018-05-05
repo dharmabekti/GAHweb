@@ -16,6 +16,7 @@
 // });
 
 
+Route::get('/', 'DashboardController@home')->name('home');
 Route::get('/login', 'LoginController@home')->name('login.home');
 Route::post('/login-auth', 'LoginController@doLogin')->name('login.auth');
 Route::get('/logout', 'LoginController@logout')->name('logout');
@@ -28,8 +29,13 @@ Route::post('/login/reset-password','LoginController@reset')->name('login.reset'
 Route::get('beranda', 'DashboardController@index')->name('dashboard'); // Dashboard
 //Pengelolaan Kamar
 Route::get('pengelolaan-kamar', 'KamarController@index')->name('kamar.tampil');
+Route::get('pengelolaan-kamar/tambah', 'KamarController@tambah')->name('kamar.tambah');
+Route::post('pengelolaan-kamar/simpankamar', 'KamarController@simpankamar')->name('kamar.simpankamar');
+Route::get('pengelolaan-kamar/ubah/{id}', 'KamarController@ubah')->name('kamar.ubah');
+Route::patch('pengelolaan-kamar/simpanperubahan/{id}', 'KamarController@simpanperubahan')->name('kamar.simpanperubahan');
 Route::get('/pengelolaan-kamar/cari','KamarController@pencarian')->name('kamar.cari');
 Route::get('/pengelolaan-kamar/detil/{id}','KamarController@detilkamar')->name('kamar.detil');
+
 Route::get('tipe-kamar', 'KamarController@tampiltipekamar')->name('tipekamar.tampil');
 Route::get('tipe-kamar/tambah', 'KamarController@tambahtipekamar')->name('tipekamar.tambah');
 Route::post('tipe-kamar/simpan', 'KamarController@simpantipekamar')->name('tipekamar.simpan');
@@ -86,7 +92,19 @@ Route::post('customer/simpan', 'CustomerController@simpan')->name('customer.simp
 Route::get('/customer/ubah/{id}','CustomerController@ubah')->name('customer.ubah');
 Route::patch('/customer/ubah/{id}','CustomerController@simpanPerubahan')->name('customer.simpanperubahan');
 Route::patch('/customer/ganti-password/{id}','CustomerController@gantiPassword')->name('customer.gantipassword');
+
 Route::get('/customer/reservasi','CustomerController@datareservasi')->name('customer.datareservasi');
+Route::get('/customer/tambahreservasi','CustomerController@tambahreservasi')->name('customer.tambahreservasi');
 Route::get('/customer/detil-reservasi/{id}','CustomerController@detilreservasi')->name('customer.detilreservasi');
 Route::delete('/customer/batal-reservasi/{id}','CustomerController@batalreservasi')->name('customer.batalreservasi');
 Route::get('/customer/histori-reservasi','CustomerController@historireservasi')->name('customer.historireservasi');
+Route::get('/customer/histori-hapus','CustomerController@hapushistorireservasi')->name('customer.hapushistorireservasi');
+
+Route::get('/customer/kamar','CustomerController@kamar')->name('customer.kamar');
+Route::get('/customer/cari-kamar','CustomerController@pencarian')->name('customer.carikamar');
+Route::get('/customer/detil-kamar/{id}','CustomerController@detilkamar')->name('customer.detilkamar');
+
+
+Route::get('/reservasi/datadiri','ReservasiNonLoginController@index')->name('reservasinonlogin.index');
+Route::get('/reservasi','ReservasiNonLoginController@reservasi')->name('reservasinonlogin.reservasi');
+Route::post('/reservasi/simpan-reservasi','ReservasiNonLoginController@simpan_reservasi')->name('reservasinonlogin.simpan');

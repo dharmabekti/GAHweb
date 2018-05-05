@@ -7,8 +7,10 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Alert;
+use DB;
 use App\Kamar;
 use App\TarifSeason;
+use App\Tarif;
 use App\DetilKamar;
 define('page', 10);
 
@@ -45,6 +47,74 @@ class KamarController extends Controller
       // $kamar = Kamar::where('ID_KAMAR','LIKE',"$id%")->first();
       return view('kamar.detil', compact('kamar'));
     }
+
+    public function tambah()
+    {
+      $tipekamar = DetilKamar::all();
+      $tarif = TarifSeason::all();
+      return view('kamar.tambah', compact('tipekamar','tarif'));
+    }
+
+    public function simpankamar(Request $request)
+    {
+      $getID = Kamar::orderBy(\DB::raw('substr(ID_KAMAR, 0,4)'),'DESC')->first();
+      $getTipe = DetilKamar::FindorFail($request->tipekamar);
+      // echo substr($getID->ID_KAMAR,0,4);
+      $kode = explode(" ", $getTipe->NAMA_KAMAR);
+      $kode2 = "";
+
+      $no = substr($getID->ID_KAMAR,0,4) + 1;
+      for($i = 0; $i<count($kode); $i++)
+      {
+        $kode2 = $kode2 . substr($kode[$i], 0, 1);
+      }
+
+      $kamar = new Kamar();
+      $kamar->ID_KAMAR= $no . $kode2;
+      $kamar->TEMPAT_TIDUR = $request->tempat_tidur;
+      if($request->smoking == "IYA")
+        $kamar->STAUS_SMOKING = $request->smoking;
+      else
+        $kamar->STAUS_SMOKING = "TIDAK";
+
+      $kamar->STATUS_BOOKING = "TERSEDIA";
+      $kamar->ID_DETIL_KAMAR = $request->tipekamar;
+      $kamar->ID_TARIF_SEASON = $request->tarifseason;
+      $kamar->save();
+
+      Alert::success('Kamar Ditambahkan', 'SUKSES')->persistent('Close');
+      return redirect()->route('kamar.tampil');
+    }
+
+    public function ubah($id)
+    {
+      $kamar = Kamar::FindorFail($id);
+      $tipekamar = DetilKamar::all();
+      $tarif = TarifSeason::all();
+      return view('kamar.ubah', compact('kamar','tipekamar','tarif'));
+    }
+
+    public function simpanperubahan(Request $request, $id)
+    {
+      $kamar = Kamar::FindorFail($id);
+      $kamar->TEMPAT_TIDUR = $request->tempat_tidur;
+      if($request->smoking == "IYA")
+        $kamar->STAUS_SMOKING = $request->smoking;
+      else
+        $kamar->STAUS_SMOKING = "TIDAK";
+
+      $kamar->STATUS_BOOKING = $request->booking;;
+      $kamar->ID_DETIL_KAMAR = $request->tipekamar;
+      $kamar->ID_TARIF_SEASON = $request->tarifseason;
+      $kamar->save();
+
+      Alert::success('Kamar Diperbarui', 'SUKSES')->persistent('Close');
+      return redirect()->route('kamar.tampil');
+    }
+
+
+
+
 
 
 

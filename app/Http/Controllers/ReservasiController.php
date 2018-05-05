@@ -50,8 +50,9 @@ class ReservasiController extends Controller
 	      			});
 	      		});
       	})->paginate(page);
+        $customer = null;
       	$reservasi->appends(['katakunci' => $katakunci]);
-      	return view('reservasi.index', compact('reservasi'));
+      	return view('reservasi.index', compact('reservasi','customer'));
     }
 
     public function detilreservasi($id)
@@ -188,10 +189,17 @@ class ReservasiController extends Controller
         $detilreservasi->JUMLAH_DEWASA = $request->tamu_dewasa;
         $detilreservasi->ID_BOOKING = $reservasi->ID_BOOKING;
         $detilreservasi->save();
+
+        $kamar = Kamar::FindOrFail($request->kamar);
+        $kamar->STATUS_BOOKING = 'TIDAK TERSEDIA';
+        $kamar->save();
       }
 
       Alert::success('Reservasi Ditambahkan', 'SUKSES')->persistent('Close');
-      return redirect()->route('reservasi.tampil', compact('reservasi'));
+      if(Session::get('role') == 6)
+        return redirect()->route('customer.datareservasi');
+      else
+        return redirect()->route('reservasi.tampil');
     }
 
 

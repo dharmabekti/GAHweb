@@ -17,6 +17,8 @@
             <div class="panel-body">
                 <div class="col-sm-4 col-xs-8 form-group">
                     <a href="{{ route('customer.datareservasi') }}" class="btn btn-warning"><i class="fa fa-arrow-left"></i> Kembali</a>
+                    <!-- <a href="{{ route('customer.hapushistorireservasi') }}" class="btn btn-danger"
+                    onclick="return confirm('Apakah Anda Ingin Membersihkan Histori Reservasi?');">Hapus Histori</a> -->
                 </div>
 
                 <div class="table-responsive">
@@ -44,16 +46,6 @@
                         </tr>
                         </tbody>
                         @endforeach
-                        <thead>
-                        <tr>
-                            <th>ID BOOKING</th>
-                            <th>NAMA KAMAR</th>
-                            <th>PEMESAN</th>
-                            <th>KOTA</th>
-                            <th>TGL RESERVASI</th>
-                            <th>KONTROL</th>
-                        </tr>
-                        </thead>
                     </table>
                 </div>
                 {!! $reservasi->links() !!}

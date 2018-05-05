@@ -65,17 +65,6 @@
                         </tr>
                         </tbody>
                         @endforeach
-                        <thead>
-                        <tr>
-                            <th>ID BOOKING</th>
-                            <th>NAMA KAMAR</th>
-                            <th>PEMESAN</th>
-                            <th>KOTA</th>
-                            <th>TGL RESERVASI</th>
-                            <th>BATAL</th>
-                            <th>KONTROL</th>
-                        </tr>
-                        </thead>
                     </table>
                 </div>
                 {!! $reservasi->links() !!}

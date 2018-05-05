@@ -61,6 +61,7 @@
                         <li><a href="{{ route('tamu.tampil') }}"><i class="fa fa-user fa-fw"></i> Daftar Tamu</a></li>
                         <li><a href="{{ route('pegawai.tampil') }}"><i class="fa fa-user fa-fw"></i> Akun Pegawai</a></li>
                     @elseif(Session::get('role') == 2)
+                        <li><a href="{{ route('kamar.tampil') }}"><i class="fa fa-home fa-fw"></i> Kamar</a></li>
                         <li><a href="{{ route('reservasi.tampil') }}"><i class="fa fa-home fa-fw"></i> Reservasi</a></li>
                     @endif
                 </ul>

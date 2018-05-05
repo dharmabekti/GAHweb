@@ -1,9 +1,9 @@
-@extends('layouts.master')
+@extends('layouts.masterCustomer')
 @section('custom_css')
 @endsection
 
 @section('title')
-	RIWAYAT RESERVASI KAMAR
+	PENGELOLAAN KAMAR
 @endsection
 
 @section('content')
@@ -16,12 +16,9 @@
             </div>
             <div class="panel-body">
                 <div class="col-sm-4 col-xs-8 form-group">
-                    <!-- <a href="" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</a> -->
-                    <a href="{{ route('reservasi.history') }}" class="btn btn-success"><i class="fa fa-refresh"></i> Refresh</a>
-                    <a href="{{ route('reservasi.tampil') }}" class="btn btn-warning"><i class="fa fa-arrow-left"></i> Kembali</a>
-                    
+                    <a href="{{ route('customer.kamar') }}" class="btn btn-success"><i class="fa fa-refresh"></i> Refresh</a>
                 </div>
-                {!! Form::open(['method'=>'GET','route'=>'reservasi.carihistory'])  !!}
+                {!! Form::open(['method'=>'GET','route'=>'customer.carikamar'])  !!}
                 <div class="col-sm-4 col-xs-8 form-group pull-right input-group">
                     <input type="text" name="katakunci" class="form-control" placeholder="Pencarian...">
                     <span class="input-group-btn">
@@ -31,35 +28,39 @@
                 {!! Form::close() !!}
 
                 <div class="table-responsive">
-                @if($reservasi->count())
+                @if($kamar->count())
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
                         <tr>
-                            <th>ID BOOKING</th>
+                            <th>ID KAMAR</th>
                             <th>NAMA KAMAR</th>
-                            <th>PEMESAN</th>
-                            <th>KOTA</th>
-                            <th>TGL RESERVASI</th>
-                            <th>BATAL</th>
+                            <th>TEMPAT TIDUR</th>
+                            <th>JUMLAH</th>
+                            <th>SMOKING</th>
+                            <th>BOOKING</th>
+                            <th>HARGA</th>
                             <th>KONTROL</th>
                         </tr>
                         </thead>
-                        @foreach($reservasi as $data)
+                        @foreach($kamar as $data)
                         <tbody>
                         <tr>
-                            <td class="center">{{ $data->reservasi['ID_BOOKING'] }}</td>
-                            <td>{{ $data->reservasi->kamar->detilkamar['NAMA_KAMAR'] }} ({{ $data->reservasi['ID_KAMAR'] }})</td>
-                            <td>{{ $data->reservasi->datadiri['NAMA'] }} ({{ $data->reservasi->datadiri['NO_IDENTITAS'] }})</td>
-                            <td class="center">{{ $data->reservasi->kota['NAMA_KOTA'] }}</td>
-                            <td>{{ $data->reservasi['TGL_RESERVASI'] }}</td>
-                            <td>{{ $data->STATUS_BATAL }}</td>
-                            <td><a href="{{ route('reservasi.detil', $data->ID_DETIL_RESERVASI) }}" class="btn btn-default btn-xs"><i class="fa fa-info-circle"></i> Detil</a></td>
+                            <td class="center">{{ $data->ID_KAMAR }}</td>
+                            <td>{{ $data->detilkamar['NAMA_KAMAR'] }}</td>
+                            <td>{{ $data->TEMPAT_TIDUR }}</td>
+                            <td>{{ $data->detilkamar['JUMLAH_KAMAR'] }}</td>
+                            <td class="center">{{ $data->STAUS_SMOKING }}</td>
+                            <td class="center">{{ $data->STATUS_BOOKING }}</td>
+                            <td>Rp. {{number_format($data->tarifkamar['HARGA_KAMAR'], 2, ',', '.')}}</td>
+                            <td>
+                                <a href="{{ route('customer.detilkamar',$data->ID_KAMAR) }}" class="btn btn-default btn-xs"><i class="fa fa-info-circle"></i> Detil</a>
+                            </td>
                         </tr>
                         </tbody>
                         @endforeach
                     </table>
                 </div>
-                {!! $reservasi->links() !!}
+                {!! $kamar->links() !!}
                 @else
                 <div class="alert">
                     <i class="fa fa-exclamation-triangle"></i> Data Tidak Tersedia...

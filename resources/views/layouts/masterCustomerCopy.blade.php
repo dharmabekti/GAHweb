@@ -38,8 +38,7 @@
             <!-- navbar-top-links -->
             <ul class="nav navbar-top-links navbar-right">
                 <!-- main dropdown -->
-                <li><a href="{{ route('dashboard') }}"><i class="fa fa-user fa-fw"></i>Selamat Datang, {{ Session::get('username') }} | </a></li>
-                <li><a href="{{ route('logout') }}"><i class="fa fa-sign-out fa-fw"></i>Logout</a></li>
+                <li><a href="{{ route('dashboard') }}"></i>Selamat Datang di Halaman Reservasi </a></li>
                 <!-- end main dropdown -->
             </ul>
             <!-- end navbar-top-links -->
@@ -53,9 +52,8 @@
             <div class="sidebar-collapse">
                 <!-- side-menu -->
                 <ul class="nav" id="side-menu">
-                	<li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard fa-fw"></i>Profil</a></li>
-                    <li><a href="{{ route('customer.kamar') }}"><i class="fa fa-home fa-fw"></i>Data Kamar</a></li>
-                    <li><a href="{{ route('customer.datareservasi') }}"><i class="fa fa-home fa-fw"></i>Data Reservasi</a></li>
+                    <li><a href="{{ route('reservasinonlogin.reservasi') }}"><i class="fa fa-file fa-fw"></i> DATA RESERVASI</a></li>
+                    <li><a href="{{ route('home') }}"><i class="fa fa-arrow-left fa-fw"></i> BATAL</a></li>
                 </ul>
                 <!-- end side-menu -->
             </div>

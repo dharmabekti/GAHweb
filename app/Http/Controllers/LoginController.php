@@ -46,7 +46,7 @@ class LoginController extends Controller
     {
         Session::flush();
         Alert::success('Anda Telah Logout' , 'SUKSES')->persistent('Close');
-        return redirect()->route('login.home');
+        return redirect()->route('home');
     }
 
     public function register()
@@ -97,7 +97,8 @@ class LoginController extends Controller
         for ($i = 0; $i < 6; $i++) {
           $string .= $characters[mt_rand(0, $max)];
         }
-        $user = User::where('USERNAME',$request->username)->first();
+
+        $user = User::where('USERNAME',$request->username)->where('ID_ROLE',6)->first();
         if(!empty($user))
         {
           $user->PASSWORD = $string;
