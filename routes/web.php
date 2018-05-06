@@ -85,6 +85,19 @@ Route::get('tamu/ubah/{id}', 'TamuController@ubah')->name('tamu.ubah');
 Route::patch('tamu/simpanperubahan/{id}', 'TamuController@simpanperubahan')->name('tamu.simpanperubahan');
 Route::get('tamu/detil/{id}', 'TamuController@detil')->name('tamu.detil');
 
+//Laporan
+Route::get('laporan/pendapatan-per-jenis-tamu', 'LaporanController@LaporanPendapatanPerJenisTamu')->name('laporan.LaporanPendapatanPerJenisTamu');
+Route::get('laporan/jumlah-tamu-per-jenis-kamar', 'LaporanController@LaporanJumlahTamuPerJenisKamar')->name('laporan.LaporanJumlahTamuPerJenisKamar');
+Route::get('laporan/pendapatan-per-cabang', 'LaporanController@LaporanPendabaranPerCabang')->name('laporan.LaporanPendabaranPerCabang');
+Route::get('laporan/reservasi-terbanyak', 'LaporanController@LaporanReservasiTerbanyak')->name('laporan.LaporanReservasiTerbanyak');
+Route::get('laporan/jumlah-tamu', 'LaporanController@LaporanJumlahTamu')->name('laporan.LaporanJumlahTamu');
+Route::get('filter-laporan/pendapatan-per-jenis-tamu', 'LaporanController@FilterLaporanPendapatanPerJenisTamu')->name('filterlaporan.LaporanPendapatanPerJenisTamu');
+Route::get('filter-laporan/jumlah-tamu-per-jenis-kamar', 'LaporanController@FilterLaporanJumlahTamuPerJenisKamar')->name('filterlaporan.LaporanJumlahTamuPerJenisKamar');
+Route::get('filter-laporan/pendapatan-per-cabang', 'LaporanController@FilterLaporanPendabaranPerCabang')->name('filterlaporan.LaporanPendabaranPerCabang');
+Route::get('filter-laporan/jumlah-tamu', 'LaporanController@FilterLaporanJumlahTamu')->name('filterlaporan.LaporanJumlahTamu');
+Route::get('filter-laporan/reservasi-terbanyak', 'LaporanController@FilterLaporanReservasiTerbanyak')->name('filterlaporan.LaporanReservasiTerbanyak');
+
+
 
 
 // Akun Customer
@@ -99,6 +112,7 @@ Route::get('/customer/detil-reservasi/{id}','CustomerController@detilreservasi')
 Route::delete('/customer/batal-reservasi/{id}','CustomerController@batalreservasi')->name('customer.batalreservasi');
 Route::get('/customer/histori-reservasi','CustomerController@historireservasi')->name('customer.historireservasi');
 Route::get('/customer/histori-hapus','CustomerController@hapushistorireservasi')->name('customer.hapushistorireservasi');
+Route::post('/reservasi/perubahan-tanggal-pemesanan','CustomerController@simpan_perubahan_reservasi')->name('customer.simpan_perubahan_reservasi');
 
 Route::get('/customer/kamar','CustomerController@kamar')->name('customer.kamar');
 Route::get('/customer/cari-kamar','CustomerController@pencarian')->name('customer.carikamar');
@@ -106,5 +120,5 @@ Route::get('/customer/detil-kamar/{id}','CustomerController@detilkamar')->name('
 
 
 Route::get('/reservasi/datadiri','ReservasiNonLoginController@index')->name('reservasinonlogin.index');
-Route::get('/reservasi','ReservasiNonLoginController@reservasi')->name('reservasinonlogin.reservasi');
-Route::post('/reservasi/simpan-reservasi','ReservasiNonLoginController@simpan_reservasi')->name('reservasinonlogin.simpan');
+Route::get('/reservasi/tambah','ReservasiNonLoginController@reservasi')->name('reservasinonlogin.reservasi');
+Route::post('/reservasi/simpanreservasi','ReservasiNonLoginController@simpan_reservasi')->name('reservasinonlogin.simpan');

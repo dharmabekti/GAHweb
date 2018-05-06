@@ -57,7 +57,17 @@
                         </tr>
                         <tr>
                             <td>TANGGAL PEMAKAIAN</td>
-                            <td>{{ date("d-M-Y", strtotime($reservasi->reservasi['TGL_MENGINAP'])) }}</td>
+                            <td><small>{{ date("d-M-Y", strtotime($reservasi->reservasi['TGL_MENGINAP'])) }}</small>
+                                <form action = "{{ route('customer.simpan_perubahan_reservasi') }}" method="post" role="form">
+                                {{ csrf_field() }}
+                                    <input type="hidden" value="{{ $reservasi->ID_BOOKING}}" name="id_booking">
+                                    <input type="date" class="form-control" name="tgl_pemesanan" 
+                                        value="{{  date('Y-m-d', strtotime($reservasi->reservasi['TGL_MENGINAP'])) }}">
+                                    <br><button type="submit" class="btn btn-xs btn-primary"
+                                        onclick="return confirm('Apakah Anda Ingin Mengubah Tanggal Pemesanan?');">
+                                        <i class="fa fa-save fa-fw"></i> Ubah Tanggal</button>
+                                </form>
+                            </td>
                         </tr>
                         <tr>
                             <td width="200px">TARIF</td>

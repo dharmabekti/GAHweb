@@ -60,6 +60,19 @@
                         <li><a href="{{ route('tarifseason.tampil') }}"><i class="fa fa-money fa-fw"></i> Tarif & Session Kamar</a></li>
                         <li><a href="{{ route('tamu.tampil') }}"><i class="fa fa-user fa-fw"></i> Daftar Tamu</a></li>
                         <li><a href="{{ route('pegawai.tampil') }}"><i class="fa fa-user fa-fw"></i> Akun Pegawai</a></li>
+                    @elseif(Session::get('role') == 3 || Session::get('role') == 4)
+                        <li><a href="{{ route('kamar.tampil') }}"><i class="fa fa-home fa-fw"></i> Kamar</a></li>
+                        <li>
+                            <a href=""><i class="fa fa-bar-chart-o fa-fw"></i> Laporan<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="{{ route('laporan.LaporanPendapatanPerJenisTamu')}}">Pendapatan per Jenis Tamu</a></li>
+                                <li><a href="{{ route('laporan.LaporanJumlahTamuPerJenisKamar')}}">Jumlah Tamu per Jenis Kamar</a></li>
+                                <li><a href="{{ route('laporan.LaporanPendabaranPerCabang')}}">Pendapatan per Cabang</a></li>
+                                <li><a href="{{ route('laporan.LaporanReservasiTerbanyak')}}">Reservasi Terbanyak</a></li>
+                                <li><a href="{{ route('laporan.LaporanJumlahTamu')}}">Jumlah Pelanggan/Tamu</a></li>
+                            </ul>
+                            <!-- second-level-items -->
+                    </li>
                     @elseif(Session::get('role') == 2)
                         <li><a href="{{ route('kamar.tampil') }}"><i class="fa fa-home fa-fw"></i> Kamar</a></li>
                         <li><a href="{{ route('reservasi.tampil') }}"><i class="fa fa-home fa-fw"></i> Reservasi</a></li>

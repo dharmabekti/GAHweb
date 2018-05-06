@@ -144,6 +144,16 @@ class CustomerController extends Controller
         })->paginate(page);
         return view('customer.historireservasi', compact('reservasi'));
     }
+
+    public function simpan_perubahan_reservasi(Request $request)
+    {
+      $reservasi = Reservasi::FindOrFail($request->id_booking);
+      $reservasi->TGL_MENGINAP = $request->tgl_pemesanan;
+      $reservasi->save();
+
+      Alert::success('Tanggal Pemesanan Diperbarui', 'SUKSES')->persistent('Close');
+      return redirect()->route('customer.datareservasi');
+    }
     
 
 
