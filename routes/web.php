@@ -67,6 +67,8 @@ Route::get('/reservasi/tambah-reservasi/{id}','ReservasiController@tambah_reserv
 Route::post('/reservasi/simpan-reservasi','ReservasiController@simpan_reservasi')->name('reservasi.simpan');
 Route::get('/reservasi/ubah-reservasi/{id}','ReservasiController@ubah_reservasi')->name('reservasi.ubah');
 Route::patch('/reservasi/simpan-perubahan/{id}','ReservasiController@simpan_perubahan_reservasi')->name('reservasi.simpanperubahan');
+Route::get('/reservasi/konfirmasi-pembayaran/{idbooking}','ReservasiController@konfirmasi_pembayaran')->name('reservasi.konfirmasi');
+Route::post('/reservasi/simpan-konfirmasi','ReservasiController@simpan_konfirmasi')->name('reservasi.simpankonfirmasi');
 
 //Pengelolaan Akun
 Route::get('pegawai', 'AkunController@index')->name('pegawai.tampil');
@@ -111,8 +113,10 @@ Route::get('/customer/tambahreservasi','CustomerController@tambahreservasi')->na
 Route::get('/customer/detil-reservasi/{id}','CustomerController@detilreservasi')->name('customer.detilreservasi');
 Route::delete('/customer/batal-reservasi/{id}','CustomerController@batalreservasi')->name('customer.batalreservasi');
 Route::get('/customer/histori-reservasi','CustomerController@historireservasi')->name('customer.historireservasi');
-Route::get('/customer/histori-hapus','CustomerController@hapushistorireservasi')->name('customer.hapushistorireservasi');
+Route::delete('/customer/histori-hapus/{idbookin}','CustomerController@hapushistorireservasi')->name('customer.hapushistorireservasi');
 Route::post('/reservasi/perubahan-tanggal-pemesanan','CustomerController@simpan_perubahan_reservasi')->name('customer.simpan_perubahan_reservasi');
+Route::get('/customer/reservasi','CustomerController@datareservasi')->name('customer.datareservasi');
+Route::get('/customer/cetak-nota/{idbooking}','CustomerController@cetaknota')->name('customer.cetaknota');
 
 Route::get('/customer/kamar','CustomerController@kamar')->name('customer.kamar');
 Route::get('/customer/cari-kamar','CustomerController@pencarian')->name('customer.carikamar');

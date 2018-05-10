@@ -17,6 +17,7 @@
             <div class="panel-body">
                 <div class="col-sm-4 col-xs-8 form-group">
                     <a href="{{ route('customer.datareservasi') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
+                    <a href="{{ route('customer.cetaknota', $reservasi->ID_BOOKING) }}" class="btn btn-success"><i class="fa fa-print"></i> Cetak Nota</a>
                 </div>
                 <div class="col-sm-12">
                 <table class="table table-striped table-bordered" id="dataTables-example">

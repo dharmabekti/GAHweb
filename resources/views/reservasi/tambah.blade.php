@@ -56,8 +56,9 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td width="200px">TARIF</td>
+                                        <td width="200px">TARIF PAKET</td>
                                         <td><select class="form-control" name="tarif">
+                                                <option value="0">Tanpa Paket</option>
                                                 @foreach ($tarif as $data)
                                                     <option value="{{ $data->ID_TARIF }}">Rp. {{number_format($data->HARGA_TARIF, 2, ',', '.')}}</option>
                                                 @endforeach
@@ -65,8 +66,12 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td width="200px">TGL PEMESANAN</td>
-                                        <td><input type="date" class="form-control" name="tgl_pemesanan" value="{{ old('tgl_pemesanan') }}" required></td>
+                                        <td width="200px">TGL MULAI</td>
+                                        <td><input type="date" class="form-control" name="tgl_mulai" value="{{ old('tgl_mulai') }}" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="200px">TGL SELESAI</td>
+                                        <td><input type="date" class="form-control" name="tgl_selesai" value="{{ old('tgl_selesai') }}" required></td>
                                     </tr>
                                     <tr>
                                         <td width="200px">KATEGORI</td>

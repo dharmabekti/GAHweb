@@ -97,9 +97,12 @@
                                             </select>
                                         </td>
                                     </tr>
+                                        <td width="200px">TGL MULAI</td>
+                                        <td><input type="date" class="form-control" name="tgl_mulai" value="{{ old('tgl_mulai') }}" required></td>
+                                    </tr>
                                     <tr>
-                                        <td width="200px">TGL PEMESANAN</td>
-                                        <td><input type="date" class="form-control" name="tgl_pemesanan" value="{{ old('tgl_pemesanan') }}" required></td>
+                                        <td width="200px">TGL SELESAI</td>
+                                        <td><input type="date" class="form-control" name="tgl_selesai" value="{{ old('tgl_selesai') }}" required></td>
                                     </tr>
                                     <tr>
                                         <td width="200px">JUMLAH TAMU</td>

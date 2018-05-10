@@ -15,6 +15,7 @@ use App\Reservasi;
 use App\DetilReservasi;
 use App\Kota;
 use App\Tarif;
+use App\CheckInOut;
 define('page', 10);
 
 class CustomerController extends Controller
@@ -138,9 +139,10 @@ class CustomerController extends Controller
     public function historireservasi()
     {
         $user = DataDiri::where('ID_USER',Session::get('id_user'))->first();
-        $reservasi = DetilReservasi::orderBy(\DB::raw('substr(ID_BOOKING, 8)'),'DESC')->whereNotIn('STATUS_BATAL',['TIDAK','DIHAPUS'])
+        $reservasi = DetilReservasi::orderBy(\DB::raw('substr(ID_BOOKING, 8)'),'DESC')->whereNotIn('STATUS_BATAL',['TIDAK'])
         ->WhereHas('reservasi', function($q) use ($user){
-            $q->where('reservasi.ID_DATA_DIRI',$user->ID_DATA_DIRI);
+            $q->where('reservasi.ID_DATA_DIRI',$user->ID_DATA_DIRI)
+              ->where('reservasi.IS_DELETED','TIDAK');
         })->paginate(page);
         return view('customer.historireservasi', compact('reservasi'));
     }
@@ -190,20 +192,11 @@ class CustomerController extends Controller
       return view('customer.detilkamar', compact('kamar'));
     }
 
-    public function hapushistorireservasi()
+    public function hapushistorireservasi($idbooking)
     {
-        $user = DataDiri::where('ID_USER',Session::get('id_user'))->first();
-        $reservasi = DetilReservasi::orderBy(\DB::raw('substr(ID_BOOKING, 8)'),'DESC')->whereNotIn('STATUS_BATAL',['TIDAK','DIHAPUS'])
-        ->WhereHas('reservasi', function($q) use ($user){
-            $q->where('reservasi.ID_DATA_DIRI',$user->ID_DATA_DIRI);
-        })->get();
-
-        foreach($reservasi as $data)
-        {
-            $detilreservasi = DetilReservasi::where('ID_BOOKING',$data->ID_BOOKING)->first();
-            $detilreservasi->STATUS_BATAL = 'DIHAPUS';
-            $detilreservasi->save();
-        }
+        $reservasi = Reservasi::FindOrFail($idbooking);
+        $reservasi->IS_DELETED = 'YA';
+        $reservasi->save();
 
         Alert::success('Histori Reservasi Dihapus', 'SUKSES')->persistent('Close');
         return redirect()->route('customer.historireservasi');
@@ -218,5 +211,13 @@ class CustomerController extends Controller
 
         $list = ['customer', 'kamar', 'kota', 'tarif'];
         return view('customer.tambahReservasiNotLogin', compact($list));
+    }
+
+    public function cetaknota($idbooking)
+    {
+      $reservasi = Reservasi::FindOrFail($idbooking);
+      $kamar = Kamar::where('ID_KAMAR', $reservasi->ID_KAMAR)->get();
+      $list = ['reservasi', 'kamar'];
+      return view('customer.cetaknota', compact($list));
     }
 }

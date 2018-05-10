@@ -68,7 +68,8 @@ class ReservasiNonLoginController extends Controller
 	      $reservasi->ID_DATA_DIRI = $id_data_diri;
 	      $reservasi->ID_KOTA = $request->kota;
 	      $reservasi->ID_TARIF = $request->tarif;
-	      $reservasi->TGL_MENGINAP = $request->tgl_pemesanan;
+        $reservasi->TGL_MENGINAP = $request->tgl_mulai;
+        $reservasi->TGL_SELESAI = $request->tgl_selesai;
 	      
 	      if($reservasi->save()){
 	        $detilreservasi = new DetilReservasi();
@@ -84,6 +85,14 @@ class ReservasiNonLoginController extends Controller
 	        $kamar = Kamar::FindOrFail($request->kamar);
 	        $kamar->STATUS_BOOKING = 'TIDAK TERSEDIA';
 	        $kamar->save();
+
+          $transaksi = new Transaksi();
+          $transaksi->NO_INVOICE = $id_booking;
+          $transaksi->ID_BOOKING = $id_booking;
+          $transaksi->JUMLAH_TARIF = $request->jumlah_kamar * $kamar->tarifkamar['HARGA_KAMAR'];
+          $transaksi->JENIS_STATUS = 'BELUM LUNAS';
+          $transaksi->TGL_TRANSAKSI = Carbon::now();
+          $transaksi->save();
 	      }
 	  // }
 

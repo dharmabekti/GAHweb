@@ -16,6 +16,9 @@ use App\DataDiri;
 use App\Kamar;
 use App\Kota;
 use App\Tarif;
+use App\DetilTarif;
+use App\Transaksi;
+use App\DetilTransaksi;
 define('page', 10);
 
 class ReservasiController extends Controller
@@ -58,7 +61,9 @@ class ReservasiController extends Controller
     public function detilreservasi($id)
     {
     	$reservasi = DetilReservasi::FindOrFail($id);
-    	return view('reservasi.detil', compact('reservasi'));
+      $paket = DetilTarif::orderBy('ID_ITEM')->where('ID_TARIF',$reservasi->reservasi->ID_TARIF)->get();
+      // echo $paket; die();
+    	return view('reservasi.detil', compact('reservasi', 'paket'));
     }
 
     public function batalreservasi($id)
@@ -177,7 +182,8 @@ class ReservasiController extends Controller
       $reservasi->ID_DATA_DIRI = $request->id_data_diri;
       $reservasi->ID_KOTA = $request->kota;
       $reservasi->ID_TARIF = $request->tarif;
-      $reservasi->TGL_MENGINAP = $request->tgl_pemesanan;
+      $reservasi->TGL_MENGINAP = $request->tgl_mulai;
+      $reservasi->TGL_SELESAI = $request->tgl_selesai;
       
       if($reservasi->save()){
         $detilreservasi = new DetilReservasi();
@@ -193,6 +199,14 @@ class ReservasiController extends Controller
         $kamar = Kamar::FindOrFail($request->kamar);
         $kamar->STATUS_BOOKING = 'TIDAK TERSEDIA';
         $kamar->save();
+
+        $transaksi = new Transaksi();
+        $transaksi->NO_INVOICE = $id_booking;
+        $transaksi->ID_BOOKING = $id_booking;
+        $transaksi->JUMLAH_TARIF = ($request->jumlah_kamar * $kamar->tarifkamar['HARGA_KAMAR']) + $request->tarif;
+        $transaksi->JENIS_STATUS = 'BELUM LUNAS';
+        $transaksi->TGL_TRANSAKSI = Carbon::now();
+        $transaksi->save();
       }
 
       Alert::success('Reservasi Ditambahkan', 'SUKSES')->persistent('Close');
@@ -228,11 +242,37 @@ class ReservasiController extends Controller
       $reservasi->ID_KAMAR = $request->kamar;
       $reservasi->ID_KOTA = $request->kota;
       $reservasi->ID_TARIF = $request->tarif;
-      $reservasi->TGL_MENGINAP = $request->tgl_pemesanan;
+      $reservasi->TGL_MENGINAP = $request->tgl_mulai;
+      $reservasi->TGL_SELESAI = $request->tgl_selesai;
       $reservasi->save();
 
       Alert::success('Reservasi Diperbarui', 'SUKSES')->persistent('Close');
       return redirect()->route('reservasi.tampil', compact('reservasi'));
+    }
+
+
+    public function konfirmasi_pembayaran($idbooking)
+    {
+      $transaksi = Transaksi::FindOrFail($idbooking);
+      return view('reservasi.konfirmasi', compact('transaksi'));
+    }
+
+    public function simpan_konfirmasi(Request $request)
+    {
+      $detiltransaksi = new DetilTransaksi();
+      $detiltransaksi->JENIS_PEMBAYARAN = $request->pembayaran;
+      $detiltransaksi->NOMOR_KARTU_KREDIT = $request->rekening;
+      $detiltransaksi->NO_INVOICE = $request->id_booking;
+      
+      if($detiltransaksi->save())
+      {
+        $transaksi = Transaksi::where('ID_BOOKING',$request->id_booking)->first();
+        $transaksi->JENIS_STATUS = 'LUNAS';
+        $transaksi->save();
+      }
+
+      Alert::success('Pembayaran Telah Dikonfirmasi', 'SUKSES')->persistent('Close');
+      return redirect()->route('reservasi.tampil');
     }
 
 }

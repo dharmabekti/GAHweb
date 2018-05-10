@@ -10,7 +10,7 @@ class Reservasi extends Model
     protected $primaryKey = 'ID_BOOKING';
     public $timestamps = false;
     public $incrementing = false;
-    protected $fillable = ['TGL_RESERVASI','ID_KAMAR','ID_DATA_DIRI','ID_KOTA','ID_TARIF'];
+    protected $fillable = ['TGL_RESERVASI','ID_KAMAR','ID_DATA_DIRI','ID_KOTA','ID_TARIF','ID_DELETED'];
 
     public function kamar(){
       return $this->belongsTo('App\Kamar','ID_KAMAR','ID_KAMAR');
@@ -26,5 +26,17 @@ class Reservasi extends Model
 
     public function tarif(){
       return $this->belongsTo('App\Tarif','ID_TARIF','ID_TARIF');
+    }
+
+    public function detilreservasi(){
+      return $this->belongsTo('App\DetilReservasi','ID_BOOKING','ID_BOOKING');
+    }
+
+    public function checkinout(){
+      return $this->belongsTo('App\CheckInOut','ID_BOOKING','ID_BOOKING');
+    }
+
+    public function transaksi(){
+      return $this->belongsTo('App\Transaksi','ID_BOOKING','ID_BOOKING');
     }
 }

@@ -17,8 +17,6 @@
             <div class="panel-body">
                 <div class="col-sm-4 col-xs-8 form-group">
                     <a href="{{ route('customer.datareservasi') }}" class="btn btn-warning"><i class="fa fa-arrow-left"></i> Kembali</a>
-                    <!-- <a href="{{ route('customer.hapushistorireservasi') }}" class="btn btn-danger"
-                    onclick="return confirm('Apakah Anda Ingin Membersihkan Histori Reservasi?');">Hapus Histori</a> -->
                 </div>
 
                 <div class="table-responsive">
@@ -42,7 +40,14 @@
                             <td class="center">{{ $data->reservasi->kota['NAMA_KOTA'] }}</td>
                             <td>{{ date("d-M-Y h:m:s", strtotime($data->reservasi['TGL_RESERVASI'])) }}</td>
                             <td>{{ date("d-M-Y", strtotime($data->reservasi['TGL_MENGINAP'])) }}</td>
-                            <td><a href="{{ route('customer.detilreservasi', $data->ID_DETIL_RESERVASI) }}" class="btn btn-default btn-xs"><i class="fa fa-info-circle"></i> Detil</a></td>
+                            <td>
+                                <form method="POST" action="{{ route('customer.hapushistorireservasi', $data->ID_BOOKING) }}" accept-charset="UTF-8">
+                                  <input name="_method" type="hidden" value="DELETE">
+                                  <input name="_token" type="hidden" value="{{ csrf_token() }}">
+                                    <a href="{{ route('customer.detilreservasi', $data->ID_DETIL_RESERVASI) }}" class="btn btn-default btn-xs"><i class="fa fa-info-circle"></i> Detil</a>
+                                    <input type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Apakah Anda Ingin Mengapus Histori Reservasi?');" value="Hapus">
+                                </form>
+                            </td>
                         </tr>
                         </tbody>
                         @endforeach

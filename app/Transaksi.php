@@ -19,4 +19,8 @@ class Transaksi extends Model
     public function detilreservasi(){
       return $this->belongsTo('App\DetilReservasi','ID_BOOKING','ID_BOOKING');
     }
+
+    public function detiltransaksi(){
+      return $this->belongsTo('App\DetilReservasi','ID_BOOKING','ID_BOOKING');
+    }
 }

@@ -40,7 +40,7 @@
                             <th>PEMESAN</th>
                             <th>KOTA</th>
                             <th>TGL RESERVASI</th>
-                            <th>BATAL</th>
+                            <th>STATUS</th>
                             <th>KONTROL</th>
                         </tr>
                         </thead>
@@ -52,7 +52,7 @@
                             <td>{{ $data->reservasi->datadiri['NAMA'] }} ({{ $data->reservasi->datadiri['NO_IDENTITAS'] }})</td>
                             <td class="center">{{ $data->reservasi->kota['NAMA_KOTA'] }}</td>
                             <td>{{ $data->reservasi['TGL_RESERVASI'] }}</td>
-                            <td>{{ $data->STATUS_BATAL }}</td>
+                            <td>{{ $data->reservasi->transaksi['JENIS_STATUS'] }}</td>
                             <td>
                                 <form method="POST" action="{{ route('reservasi.batal', $data->ID_DETIL_RESERVASI) }}" accept-charset="UTF-8">
                                   <input name="_method" type="hidden" value="DELETE">

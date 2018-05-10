@@ -19,4 +19,8 @@ class Kamar extends Model
     public function tarifkamar(){
       return $this->belongsTo('App\TarifSeason','ID_TARIF_SEASON','ID_TARIF_SEASON');
     }
+
+    public function reservasi(){
+      return $this->belongsTo('App\Reservasi','ID_KAMAR','ID_KAMAR');
+    }
 }

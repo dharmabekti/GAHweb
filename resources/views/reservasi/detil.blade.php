@@ -17,9 +17,15 @@
             <div class="panel-body">
                 <div class="col-sm-4 col-xs-8 form-group">
                     <a href="{{ route('reservasi.tampil') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
+                    <a href="{{ route('reservasi.konfirmasi', $reservasi->ID_BOOKING) }}" class="btn btn-success"><i class="fa fa-money"></i> Konfirmasi Pembayaran</a>
                 </div>
                 <div class="col-sm-12">
                 <table class="table table-striped table-bordered" id="dataTables-example">
+                <?php 
+                    $hargaKamar = $reservasi->reservasi->kamar->tarifkamar['HARGA_KAMAR'] * $reservasi->JUMLAH_KAMAR;
+                    $tarifPaket = $reservasi->reservasi->tarif['HARGA_TARIF'];
+                    $total = $hargaKamar + $tarifPaket;
+                ?>
                     <thead>
                         <tr>
                             <th colspan="2">RESERVASI KAMAR</th>
@@ -57,14 +63,47 @@
                         </tr>
                         <tr>
                             <td>TANGGAL PEMAKAIAN</td>
-                            <td>{{ date("d-M-Y", strtotime($reservasi->reservasi['TGL_MENGINAP'])) }}</td>
+                            <td>{{ date("d-M-Y", strtotime($reservasi->reservasi['TGL_MENGINAP'])) }} s/d
+                                {{ date("d-M-Y", strtotime($reservasi->reservasi['TGL_SELESAI'])) }}
+                            </td>
                         </tr>
                         <tr>
-                            <td width="200px">TARIF</td>
-                            <td>Rp. {{number_format($reservasi->reservasi->tarif['HARGA_TARIF'], 2, ',', '.')}}</td>
-                        </tr>                        
+                            <td width="200px">TARIF PAKET</td>
+                            <td>Rp. {{number_format($tarifPaket, 2, ',', '.')}}</td>
+                        </tr> 
+                        <tr>
+                            <td width="200px">STATUS PEMBAYARAN</td>
+                            <td>{{ $reservasi->reservasi->transaksi['JENIS_STATUS'] }}</td>
+                        </tr> 
                     </tbody>
                 </table>
+
+                @if($paket->count())
+                <table class="table table-striped table-bordered" id="dataTables-example">
+                    <thead>
+                        <tr>
+                            <th colspan="4">PAKET TAMBAHAN</th>
+                        </tr>
+                        <tr>
+                            <th>NAMA ITEM</th>
+                            <th>HARGA</th>
+                            <th>JUMLAH</th>
+                            <th>TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($paket as $data)
+                        <tr>
+                            <td>{{ $data->item['NAMA_ITEM'] }}</td>
+                            <td align="right">Rp. {{number_format($data->item['HARGA_ITEM'], 2, ',', '.')}}</td>
+                            <td>{{ $data->JUMLAH_ITEM }}</td>
+                            <td align="right">Rp. {{number_format($data->item['HARGA_ITEM'] * $data->JUMLAH_ITEM, 2, ',', '.')}}</td>
+                        </tr> 
+                    @endforeach
+                    </tbody>
+                </table>
+                @endif
+
                 <table class="table table-striped table-bordered" id="dataTables-example">
                     <thead>
                         <tr>
@@ -126,7 +165,7 @@
                             <td>{{ $reservasi->reservasi->kamar['STAUS_SMOKING'] }}</td>
                         </tr>
                         <tr>
-                            <td width="200px">TEMPAT TIDUR</td>
+                            <td width="200px">STATUS BOOKING</td>
                             <td>{{ $reservasi->reservasi->kamar['STATUS_BOOKING'] }}</td>
                         </tr>
                         <tr>
@@ -139,12 +178,15 @@
                         </tr>
                         <tr>
                             <td width="200px">HARGA KAMAR</td>
-                            <td>Rp. {{number_format($reservasi->reservasi->kamar->tarifkamar['HARGA_KAMAR'], 2, ',', '.')}}</td>
+                            <td>Rp. {{number_format($hargaKamar, 2, ',', '.')}}</td>
                         </tr>
                         <tr>
                             <td width="200px">TANGGAL KAMAR</td>
                             <td>Tgl. Mulai: {{$reservasi->reservasi->kamar->tarifkamar['TGL_MULAI'] }} 
                                 &emsp;Tgl. Selesai: {{$reservasi->reservasi->kamar->tarifkamar['TGL_SELESAI'] }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="right" style="font-weight: bold;">TOTAL TRANSAKSI: Rp. {{number_format($total, 2, ',', '.')}}</td>
                         </tr>
                     </tbody>
                 </table>
