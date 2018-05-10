@@ -16,6 +16,7 @@ use App\DetilReservasi;
 use App\Kota;
 use App\Tarif;
 use App\CheckInOut;
+use PDF;
 define('page', 10);
 
 class CustomerController extends Controller
@@ -219,5 +220,16 @@ class CustomerController extends Controller
       $kamar = Kamar::where('ID_KAMAR', $reservasi->ID_KAMAR)->get();
       $list = ['reservasi', 'kamar'];
       return view('customer.cetaknota', compact($list));
+    }
+
+    public function export_cetaknota($idbooking)
+    {
+      $reservasi = Reservasi::FindOrFail($idbooking);
+      $kamar = Kamar::where('ID_KAMAR', $reservasi->ID_KAMAR)->get();
+      
+      $namefile = 'Nota Pemesanan _ ' . $idbooking;
+      $pdf = PDF::loadView('customer.exportnota', compact('reservasi', 'kamar'));
+      $pdf->setPaper('A4', 'potrait');
+      return $pdf->stream($namefile . '.pdf');
     }
 }
