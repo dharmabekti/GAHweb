@@ -91,7 +91,7 @@
                                     <tr>
                                         <td colspan="2">
                                             <button type="submit" class="btn btn-primary"><i class="fa fa-save fa-fw"></i> Simpan</button>
-                                            <a href="{{ route('tamu.tampil') }}" class="btn btn-danger"> Batal</a>
+                                            <a href="{{ route('customer.datareservasi') }}" class="btn btn-danger"> Batal</a>
                                         </td>
                                     </tr>
                                 </form>
