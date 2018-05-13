@@ -232,4 +232,17 @@ class CustomerController extends Controller
       $pdf->setPaper('A4', 'potrait');
       return $pdf->stream($namefile . '.pdf');
     }
+
+
+    public function print($keterangan)
+    {
+        $pesan = '';
+        if($keterangan == 'UnduhReservasi')
+            $pesan = 'Tanda Terima Reservasi Berhasil Diunduh.';
+        else if($keterangan == 'PrintReservasi')
+            $pesan = 'Tanda Terima Reservasi Sedang Diproses.';
+
+        Alert::success($pesan, 'SUKSES')->persistent('Close');
+        return redirect()->back();
+    }
 }

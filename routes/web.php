@@ -118,6 +118,7 @@ Route::post('/reservasi/perubahan-tanggal-pemesanan','CustomerController@simpan_
 Route::get('/customer/reservasi','CustomerController@datareservasi')->name('customer.datareservasi');
 Route::get('/customer/cetak-nota/{idbooking}','CustomerController@cetaknota')->name('customer.cetaknota');
 Route::get('/customer/cetak-nota/export/{idbooking}', 'CustomerController@export_cetaknota')->name('customer.export_cetaknota');
+Route::get('/print/{keterangan}','CustomerController@print')->name('customer.print');
 
 Route::get('/customer/kamar','CustomerController@kamar')->name('customer.kamar');
 Route::get('/customer/cari-kamar','CustomerController@pencarian')->name('customer.carikamar');

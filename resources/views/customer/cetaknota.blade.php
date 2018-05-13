@@ -12,7 +12,8 @@
     <!-- Advanced Tables -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                <!--  -->
+                <a href="{{ route('customer.print', 'UnduhReservasi') }}" class="btn btn-primary"><i class="fa fa-download"></i> Unduh</a>
+                <a href="{{ route('customer.print', 'PrintReservasi') }}" class="btn btn-warning"><i class="fa fa-print"></i> Print</a>
             </div>
             <div class="panel-body">
                 <div class="col-sm-4 col-xs-8 form-group">
