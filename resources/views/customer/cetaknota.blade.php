@@ -50,11 +50,11 @@
                     <tbody>
                         <tr>
                             <td width="200px">Check In</td>
-                            <td>{{ date("d-M-Y", strtotime($reservasi->checkinout['TGL_CHECKIN'])) }}</td>
+                            <td><?php if(!empty($reservasi->checkinout)) echo date("d-M-Y", strtotime($reservasi->checkinout['TGL_CHECKIN']));?></td>
                         </tr>                        
                         <tr>
                             <td width="200px">Check Out</td>
-                            <td>{{ date("d-M-Y", strtotime($reservasi->checkinout['TGL_CHECKOUT'])) }}</td>
+                            <td><?php if(!empty($reservasi->checkinout)) echo date("d-M-Y", strtotime($reservasi->checkinout['TGL_CHECKOUT']));?></td>
                         </tr>
                         <tr>
                             <td width="200px">Dewasa</td>
@@ -82,7 +82,7 @@
                             <th>BED</th>
                             <th>JUMLAH</th>
                             <th>HARGA</th>
-                            <th>TOTAL</th>
+                            <th>SUBTOTAL</th>
                         </tr>
                         </thead>
                         <?php $total = 0; ?>
@@ -91,19 +91,43 @@
                         <tr>
                             <?php 
                                 $subtotal = $data->tarifkamar['HARGA_KAMAR'] * $data->reservasi->detilreservasi['JUMLAH_KAMAR'];
-                                $total = $total + $subtotal; 
+                                $start = new DateTime($data->reservasi['TGL_MENGINAP']);
+                                $end = new DateTime($data->reservasi['TGL_SELESAI']);
+                                $interval = $start->diff($end)->days;
                             ?>
                             <td>{{ $data->detilkamar['NAMA_KAMAR'] }}</td>
                             <td>{{ $data->TEMPAT_TIDUR }}</td>
-                            <td>{{ $data->reservasi->detilreservasi['JUMLAH_KAMAR'] }}</td>
+                            <td>{{ $data->reservasi->detilreservasi['JUMLAH_KAMAR'] }} x {{ $interval }} hari</td>
                             <td align="right">Rp. {{number_format($data->tarifkamar['HARGA_KAMAR'], 2, ',', '.')}}</td>
-                            <td align="right">Rp. {{number_format($subtotal, 2, ',', '.')}}</td>
+                            <td align="right">Rp. {{number_format($interval * $subtotal, 2, ',', '.')}}</td>
                         </tr>
+                        </tbody>
+                        @endforeach
+
+                        <thead>
+                        <tr>
+                            <th colspan="5">EKSTRA ITEM</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2">ITEM</th>
+                            <th>JUMLAH</th>
+                            <th>HARGA</th>
+                            <th>SUBTOTAL</th>
+                        </tr>
+                        </thead>
+                        @foreach($ekstraitem as $data2)
+                        <tbody>
+                            <tr>
+                                <td colspan="2">{{ $data2->ID_ITEM }}. {{ $data2->item['NAMA_ITEM'] }}</td>
+                                <td>{{ $data2->JUMLAH_ITEM }}</td>
+                                <td align="right">Rp. {{number_format($data2->item['HARGA_ITEM'], 2, ',', '.')}}</td>
+                                <td align="right">Rp. {{number_format($data2->JUMLAH_ITEM * $data2->item['HARGA_ITEM'], 2, ',', '.')}}</td>
+                            </tr>
                         </tbody>
                         @endforeach
                         <tr>
                             <td colspan="4" align="right">TOTAL</td>
-                            <td align="right" style="font-weight: bold;">Rp. {{number_format($total, 2, ',', '.')}}</td>
+                            <td align="right" style="font-weight: bold;">Rp. {{number_format($data->reservasi->transaksi['JUMLAH_TARIF'], 2, ',', '.')}}</td>
                         </tr>
                     </table>
                 </div>

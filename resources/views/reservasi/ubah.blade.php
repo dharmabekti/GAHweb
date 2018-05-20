@@ -68,8 +68,12 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td width="200px">TGL PEMESANAN</td>
-                                        <td><input type="date" class="form-control" name="tgl_pemesanan" value="{{  date('Y-m-d', strtotime($detilreservasi->reservasi['TGL_MENGINAP'])) }}" required></td>
+                                        <td width="200px">TGL MULAI</td>
+                                        <td><input type="date" class="form-control" name="tgl_mulai" value="{{  date('Y-m-d', strtotime($detilreservasi->reservasi['TGL_MENGINAP'])) }}" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="200px">TGL SELESAI</td>
+                                        <td><input type="date" class="form-control" name="tgl_selesai" value="{{  date('Y-m-d', strtotime($detilreservasi->reservasi['TGL_SELESAI'])) }}" required></td>
                                     </tr>
                                     <tr>
                                         <td width="200px">KATEGORI</td>

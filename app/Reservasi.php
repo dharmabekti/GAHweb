@@ -39,4 +39,8 @@ class Reservasi extends Model
     public function transaksi(){
       return $this->belongsTo('App\Transaksi','ID_BOOKING','ID_BOOKING');
     }
+
+    public function ekstraitem(){
+      return $this->belongsTo('App\DetilTarif','ID_TARIF','ID_TARIF');
+    }
 }

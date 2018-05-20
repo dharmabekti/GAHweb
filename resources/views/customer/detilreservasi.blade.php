@@ -17,10 +17,15 @@
             <div class="panel-body">
                 <div class="col-sm-4 col-xs-8 form-group">
                     <a href="{{ route('customer.datareservasi') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
-                    <a href="{{ route('customer.cetaknota', $reservasi->ID_BOOKING) }}" class="btn btn-success"><i class="fa fa-print"></i> Cetak Nota</a>
+                    <a target="_blank" href="{{ route('customer.cetaknota', $reservasi->ID_BOOKING) }}" class="btn btn-success"><i class="fa fa-print"></i> Cetak Nota</a>
                 </div>
                 <div class="col-sm-12">
                 <table class="table table-striped table-bordered" id="dataTables-example">
+                    <?php 
+                        $start = new DateTime($reservasi->reservasi['TGL_MENGINAP']);
+                        $end = new DateTime($reservasi->reservasi['TGL_SELESAI']);
+                        $interval = $start->diff($end)->days;
+                    ?>
                     <thead>
                         <tr>
                             <th colspan="2">RESERVASI KAMAR</th>
@@ -53,17 +58,21 @@
                             <td>{{ $reservasi->reservasi->kota['NAMA_KOTA'] }}</td>
                         </tr>
                         <tr>
-                            <td>TANGGAL RESERVASI</td>
+                            <td>TGL RESERVASI</td>
                             <td>{{ date("d-M-Y h:m:s", strtotime($reservasi->reservasi['TGL_RESERVASI'])) }}</td>
                         </tr>
                         <tr>
-                            <td>TANGGAL PEMAKAIAN</td>
-                            <td><small>{{ date("d-M-Y", strtotime($reservasi->reservasi['TGL_MENGINAP'])) }}</small>
+                            <td>TGL PEMAKAIAN</td>
+                            <td><small>Dari : {{ date("d-M-Y", strtotime($reservasi->reservasi['TGL_MENGINAP'])) }}</small>
                                 <form action = "{{ route('customer.simpan_perubahan_reservasi') }}" method="post" role="form">
                                 {{ csrf_field() }}
                                     <input type="hidden" value="{{ $reservasi->ID_BOOKING}}" name="id_booking">
-                                    <input type="date" class="form-control" name="tgl_pemesanan" 
-                                        value="{{  date('Y-m-d', strtotime($reservasi->reservasi['TGL_MENGINAP'])) }}">
+                                    <input type="date" class="form-control" name="tgl_mulai" 
+                                        value="{{  date('Y-m-d', strtotime($reservasi->reservasi['TGL_MENGINAP'])) }}"><br/>
+
+                                <small>Sampai: {{ date("d-M-Y", strtotime($reservasi->reservasi['TGL_SELESAI'])) }}</small>
+                                    <input type="date" class="form-control" name="tgl_selesai" 
+                                        value="{{  date('Y-m-d', strtotime($reservasi->reservasi['TGL_SELESAI'])) }}">
                                     <br><button type="submit" class="btn btn-xs btn-primary"
                                         onclick="return confirm('Apakah Anda Ingin Mengubah Tanggal Pemesanan?');">
                                         <i class="fa fa-save fa-fw"></i> Ubah Tanggal</button>
@@ -71,7 +80,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <td width="200px">TARIF</td>
+                            <td>LAMA HARI</td>
+                            <td>{{ $interval }} hari</td>
+                        </tr>
+                        <tr>
+                            <td width="200px">TARIF EKSTRA ITEM</td>
                             <td>Rp. {{number_format($reservasi->reservasi->tarif['HARGA_TARIF'], 2, ',', '.')}}</td>
                         </tr>                        
                     </tbody>
@@ -150,13 +163,13 @@
                         </tr>
                         <tr>
                             <td width="200px">HARGA KAMAR</td>
-                            <td>Rp. {{number_format($reservasi->reservasi->kamar->tarifkamar['HARGA_KAMAR'], 2, ',', '.')}}</td>
+                            <td>Rp. {{number_format($reservasi->reservasi->kamar->tarifkamar['HARGA_KAMAR'], 2, ',', '.')}}/hari</td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <td width="200px">TANGGAL KAMAR</td>
                             <td>Tgl. Mulai: {{$reservasi->reservasi->kamar->tarifkamar['TGL_MULAI'] }} 
                                 &emsp;Tgl. Selesai: {{$reservasi->reservasi->kamar->tarifkamar['TGL_SELESAI'] }}</td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
                 </div>

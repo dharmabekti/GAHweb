@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Alert;
+use DB;
+use DateTime;
+use Carbon\Carbon;
 use App\DataDiri;
 use App\User;
 use App\Kamar;
@@ -15,6 +18,8 @@ use App\Reservasi;
 use App\DetilReservasi;
 use App\Kota;
 use App\Tarif;
+use App\DetilTarif;
+use App\Transaksi;
 use App\CheckInOut;
 use PDF;
 define('page', 10);
@@ -151,8 +156,23 @@ class CustomerController extends Controller
     public function simpan_perubahan_reservasi(Request $request)
     {
       $reservasi = Reservasi::FindOrFail($request->id_booking);
-      $reservasi->TGL_MENGINAP = $request->tgl_pemesanan;
+      $reservasi->TGL_MENGINAP = $request->tgl_mulai;
+      $reservasi->TGL_SELESAI = $request->tgl_selesai;
       $reservasi->save();
+
+      $harimulai = new DateTime($request->tgl_mulai);
+      $hariselesai = new DateTime($request->tgl_selesai);
+      $selisih = $harimulai->diff($hariselesai)->days;
+
+      $kamar = Kamar::FindOrFail($reservasi->ID_KAMAR);
+      $tarif = Tarif::FindOrFail($reservasi->ID_TARIF);
+      
+      if($reservasi->save())
+      {
+        $transaksi = Transaksi::FindOrFail($request->id_booking);
+        $transaksi->JUMLAH_TARIF = ($selisih * $reservasi->detilreservasi['JUMLAH_KAMAR'] * $kamar->tarifkamar['HARGA_KAMAR']) + $tarif->HARGA_TARIF;
+        $transaksi->save();
+      }
 
       Alert::success('Tanggal Pemesanan Diperbarui', 'SUKSES')->persistent('Close');
       return redirect()->route('customer.datareservasi');
@@ -218,7 +238,9 @@ class CustomerController extends Controller
     {
       $reservasi = Reservasi::FindOrFail($idbooking);
       $kamar = Kamar::where('ID_KAMAR', $reservasi->ID_KAMAR)->get();
-      $list = ['reservasi', 'kamar'];
+      $ekstraitem = DetilTarif::where('ID_TARIF', $reservasi->ID_TARIF)->get();
+      $list = ['reservasi', 'kamar', 'ekstraitem'];
+      //dd($reservasi->ekstraitem);
       return view('customer.cetaknota', compact($list));
     }
 

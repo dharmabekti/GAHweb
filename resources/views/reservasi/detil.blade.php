@@ -24,7 +24,9 @@
                 <?php 
                     $hargaKamar = $reservasi->reservasi->kamar->tarifkamar['HARGA_KAMAR'] * $reservasi->JUMLAH_KAMAR;
                     $tarifPaket = $reservasi->reservasi->tarif['HARGA_TARIF'];
-                    $total = $hargaKamar + $tarifPaket;
+                    $start = new DateTime($reservasi->reservasi['TGL_MENGINAP']);
+                    $end = new DateTime($reservasi->reservasi['TGL_SELESAI']);
+                    $interval = $start->diff($end)->days;
                 ?>
                     <thead>
                         <tr>
@@ -64,7 +66,7 @@
                         <tr>
                             <td>TANGGAL PEMAKAIAN</td>
                             <td>{{ date("d-M-Y", strtotime($reservasi->reservasi['TGL_MENGINAP'])) }} s/d
-                                {{ date("d-M-Y", strtotime($reservasi->reservasi['TGL_SELESAI'])) }}
+                                {{ date("d-M-Y", strtotime($reservasi->reservasi['TGL_SELESAI'])) }} ( {{ $interval }} hari )
                             </td>
                         </tr>
                         <tr>
@@ -178,15 +180,10 @@
                         </tr>
                         <tr>
                             <td width="200px">HARGA KAMAR</td>
-                            <td>Rp. {{number_format($hargaKamar, 2, ',', '.')}}</td>
+                            <td>Rp. {{number_format($hargaKamar, 2, ',', '.')}}/hari x {{ $interval }} hari = {{number_format($hargaKamar * $interval, 2, ',', '.')}}</td>
                         </tr>
                         <tr>
-                            <td width="200px">TANGGAL KAMAR</td>
-                            <td>Tgl. Mulai: {{$reservasi->reservasi->kamar->tarifkamar['TGL_MULAI'] }} 
-                                &emsp;Tgl. Selesai: {{$reservasi->reservasi->kamar->tarifkamar['TGL_SELESAI'] }}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" align="right" style="font-weight: bold;">TOTAL TRANSAKSI: Rp. {{number_format($total, 2, ',', '.')}}</td>
+                            <td colspan="2" align="right" style="font-weight: bold;">TOTAL TRANSAKSI: Rp. {{number_format($reservasi->reservasi->transaksi['JUMLAH_TARIF'], 2, ',', '.')}}</td>
                         </tr>
                     </tbody>
                 </table>

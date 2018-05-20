@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Alert;
 use DB;
+use DateTime;
 use Carbon\Carbon;
 use App\Reservasi;
 use App\DetilReservasi;
@@ -200,10 +201,16 @@ class ReservasiController extends Controller
         $kamar->STATUS_BOOKING = 'TIDAK TERSEDIA';
         $kamar->save();
 
+        $harimulai = new DateTime($request->tgl_mulai);
+        $hariselesai = new DateTime($request->tgl_selesai);
+        $selisih = $harimulai->diff($hariselesai)->days;
+
+        $tarif = Tarif::FindOrFail($request->tarif);
+
         $transaksi = new Transaksi();
         $transaksi->NO_INVOICE = $id_booking;
         $transaksi->ID_BOOKING = $id_booking;
-        $transaksi->JUMLAH_TARIF = ($request->jumlah_kamar * $kamar->tarifkamar['HARGA_KAMAR']) + $request->tarif;
+        $transaksi->JUMLAH_TARIF = ($selisih * $request->jumlah_kamar * $kamar->tarifkamar['HARGA_KAMAR']) + $tarif->HARGA_TARIF;
         $transaksi->JENIS_STATUS = 'BELUM LUNAS';
         $transaksi->TGL_TRANSAKSI = Carbon::now();
         $transaksi->save();
@@ -236,7 +243,7 @@ class ReservasiController extends Controller
       $detilreservasi->JUMLAH_KAMAR = $request->jumlah_kamar;
       $detilreservasi->JUMLAH_ANAK = $request->tamu_anak;
       $detilreservasi->JUMLAH_DEWASA = $request->tamu_dewasa;
-      $detilreservasi->save();
+      
 
       $reservasi = Reservasi::FindOrFail($detilreservasi->ID_BOOKING);
       $reservasi->ID_KAMAR = $request->kamar;
@@ -245,6 +252,28 @@ class ReservasiController extends Controller
       $reservasi->TGL_MENGINAP = $request->tgl_mulai;
       $reservasi->TGL_SELESAI = $request->tgl_selesai;
       $reservasi->save();
+
+      if($detilreservasi->save())
+      {
+        $kamar = Kamar::FindOrFail($reservasi->ID_KAMAR);
+        $kamar->STATUS_BOOKING = 'TERSEDIA';
+        if($kamar->save())
+        {
+          $kamar = Kamar::FindOrFail($request->kamar);
+          $kamar->STATUS_BOOKING = 'TIDAK TERSEDIA';
+          $kamar->save();
+        }
+
+        $harimulai = new DateTime($request->tgl_mulai);
+        $hariselesai = new DateTime($request->tgl_selesai);
+        $selisih = $harimulai->diff($hariselesai)->days;
+
+        $tarif = Tarif::FindOrFail($request->tarif);
+
+        $transaksi = Transaksi::FindOrFail($detilreservasi->ID_BOOKING);
+        $transaksi->JUMLAH_TARIF = ($selisih * $request->jumlah_kamar * $kamar->tarifkamar['HARGA_KAMAR']) + $tarif->HARGA_TARIF;
+        $transaksi->save();
+      }
 
       Alert::success('Reservasi Diperbarui', 'SUKSES')->persistent('Close');
       return redirect()->route('reservasi.tampil', compact('reservasi'));

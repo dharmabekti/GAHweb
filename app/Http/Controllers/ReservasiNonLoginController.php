@@ -86,10 +86,16 @@ class ReservasiNonLoginController extends Controller
 	        $kamar->STATUS_BOOKING = 'TIDAK TERSEDIA';
 	        $kamar->save();
 
+          $harimulai = new DateTime($request->tgl_mulai);
+          $hariselesai = new DateTime($request->tgl_selesai);
+          $selisih = $harimulai->diff($hariselesai)->days;
+
+          $tarif = Tarif::FindOrFail($request->tarif);
+
           $transaksi = new Transaksi();
           $transaksi->NO_INVOICE = $id_booking;
           $transaksi->ID_BOOKING = $id_booking;
-          $transaksi->JUMLAH_TARIF = $request->jumlah_kamar * $kamar->tarifkamar['HARGA_KAMAR'];
+          $transaksi->JUMLAH_TARIF = ($selisih * $request->jumlah_kamar * $kamar->tarifkamar['HARGA_KAMAR']) + $tarif->HARGA_TARIF;
           $transaksi->JENIS_STATUS = 'BELUM LUNAS';
           $transaksi->TGL_TRANSAKSI = Carbon::now();
           $transaksi->save();
